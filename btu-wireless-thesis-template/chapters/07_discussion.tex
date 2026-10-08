@@ -1,0 +1,49 @@
+% ==============================================================================
+% CHAPTER 7: DISCUSSION AND LIMITATIONS
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Discussion and Limitations}
+\label{ch:discussion}
+
+\begin{takeawaybox}[Writing Guide: Chapter 7 --- Discussion]
+\textbf{Goal}: Interpret the meaning of your results beyond raw numbers. Address failure cases, analyze architectural trade-offs, and conduct a transparent "Threats to Validity" analysis.\\
+\textbf{Typical Length}: 6--10 pages (approx. 8--12\% of the thesis).\\
+\textbf{Essential Topics}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Interpretation of Findings}: Why did the proposed method work (or where did it struggle)?
+    \item \textbf{Failure Case Analysis}: Present 2--3 real examples where your system made erroneous routing decisions.
+    \item \textbf{Threats to Validity}: Structured analysis of internal validity (biases, confounding variables), external validity (generalizability to other edge domains), and construct validity (appropriateness of metrics).
+    \item \textbf{Practical Deployment Considerations}: Battery life, hardware thermal throttling, and network jitter.
+\end{itemize}
+\end{takeawaybox}
+
+\section{Interpretation of Empirical Findings}
+\label{sec:disc_interpretation}
+
+The experimental results validate our foundational premise: predictive uncertainty cannot be treated as a monolithic scalar quantity in distributed edge systems. By explicitly separating reducible epistemic gaps from irreducible aleatoric ambiguities, \ac{UTSR} prevents the catastrophic waste of battery power and network egress bandwidth associated with naive cloud escalation.
+
+In particular, the observation that high-aleatoric inputs fail just as frequently on high-tier foundation models as on compact edge models underscores the futility of parameter scaling in the presence of sensory noise. In such regimes, selective deferral to human oversight or sensory realignment is the only mathematically sound remediation.
+
+\section{Failure Mode and Error Analysis}
+\label{sec:disc_failures}
+
+Despite strong overall performance, our qualitative error analysis revealed two primary failure modes:
+\begin{enumerate}
+    \item \textbf{Spurious Entailment in Small NLI Models}: In edge configurations using aggressively distilled NLI cross-encoders ($\le \SI{60}{\mega\byte}$ footprint), subtle factual contradictions involving numeric quantities were occasionally misclassified as mutual entailments, leading to incorrect semantic class merges.
+    \item \textbf{Extreme Latency Spikes during Wireless Congestion}: While average latency remained low (\SI{228.4}{\milli\second}), packet collisions and channel fading on 802.15.4 links caused occasional tail latency spikes exceeding \SI{1.5}{\second} when multi-hop mesh forwarding was active.
+\end{enumerate}
+
+\section{Threats to Validity}
+\label{sec:disc_threats}
+
+A critical requirement of scientific rigor at the Chair of Wireless Systems is a formal reflection on threats to validity:
+
+\subsection{Internal Validity}
+Internal validity concerns whether the observed performance gains can be definitively attributed to the \ac{UTSR} routing logic rather than confounding variables. To mitigate this risk, all baselines were evaluated on identical hardware nodes under synchronized temperature and clock frequencies, and all stochastic runs were repeated across 5 distinct random seeds.
+
+\subsection{External Validity}
+External validity addresses the generalizability of our findings to other domains. While our testbed utilized ultrasonic sensor streams and standard QA benchmarks, further investigation is required to ascertain whether similar efficiency gains translate directly to continuous multimodal video streams or safety-critical automotive CAN-bus telemetry.
+
+\subsection{Construct Validity}
+Construct validity evaluates whether our chosen metrics accurately capture the underlying scientific concepts. We adopted both algorithmic metrics (AUROC, Exact Match) and systems-level metrics (P95 latency, egress bandwidth) to ensure an unbiased, holistic assessment.

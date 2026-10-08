@@ -1,0 +1,61 @@
+% ==============================================================================
+% CHAPTER 3: RELATED WORK & STATE OF THE ART
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Related Work and State of the Art}
+\label{ch:related_work}
+
+\begin{takeawaybox}[Writing Guide: Chapter 3 --- Related Work]
+\textbf{Goal}: Position your work within current academic literature. Synthesize recent approaches, categorize them by theme, critically compare their strengths and limitations, and clearly articulate the specific gap your thesis fills.\\
+\textbf{Typical Length}: 6--10 pages (approx. 10--15\% of the thesis).\\
+\textbf{Best Practices}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Synthesize, Do Not Just List}: Avoid writing disconnected paragraphs like "Author A did X. Then Author B did Y." Group related papers under thematic subheadings.
+    \item \textbf{Use Comparison Tables}: A structured taxonomy table (\Cref{tab:related_work_comparison}) comparing your approach against 4--6 key baselines is expected in Master's theses.
+    \item \textbf{Highlight the Research Gap}: Conclude each section by pointing out what remains unsolved and how your work directly targets that shortfall.
+\end{itemize}
+\end{takeawaybox}
+
+\section{Edge AI and Adaptive Model Cascades}
+\label{sec:related_edge_cascades}
+
+To mitigate the computational limitations of edge devices, early-exit networks and model cascading frameworks have gained widespread traction~\cite{pechlivanidou2022survey}. Cascades execute a lightweight local model first and escalate to a more capable, energy-intensive model only when the local prediction exhibits low confidence. For example, popular systems deploy small SLMs (Small Language Models) on gateways while forwarding difficult queries to centralized clusters.
+
+However, existing cascades predominantly rely on heuristic confidence thresholds computed from softmax probabilities. As shown by Kendall and Gal~\cite{kendall2017uncertainties}, softmax confidence is notoriously uncalibrated and blind to out-of-distribution shifts. Crucially, when an edge node encounters sensory inputs corrupted by multipath interference or acoustic noise, the confidence collapses due to \emph{aleatoric} factors. Forwarding such samples to a larger cloud model wastes communication energy without improving classification accuracy.
+
+\section{Uncertainty Estimation in Autoregressive Models}
+\label{sec:related_uncertainty_quant}
+
+Recent advances have focused on uncertainty quantification specifically tailored for sequence-generation architectures. Kuhn et al.~\cite{kuhn2023semantic} introduced semantic entropy to detect hallucinations by clustering mutually entailing generations. While effective for hallucination detection on high-end server clusters, computing semantic entropy requires generating multiple stochastic samples ($N \ge 10$) and running quadratic $O(N^2)$ NLI pairwise evaluations. On battery-constrained wireless gateways, such computational overhead is prohibitive without aggressive distillation or early semantic pruning.
+
+\section{Human-in-the-Loop Orchestration and Learning to Defer}
+\label{sec:related_hitl}
+
+In safety-critical cyber-physical systems, autonomous pipelines must safely defer uncertain predictions to human experts (\ac{HITL}). The mathematical framework of \emph{learning to defer} models the joint cost of human labor and machine prediction error. Traditional deferral mechanisms trigger human escalation whenever total predictive uncertainty exceeds a budget threshold. However, in noisy wireless monitoring environments, this results in human fatigue and excessive operational costs, as human supervisors are repeatedly queried for trivial epistemic gaps that could have been resolved through automated database lookups.
+
+\section{Comparative Synthesis and the Research Gap}
+\label{sec:related_synthesis}
+
+\Cref{tab:related_work_comparison} provides a comparative taxonomy of the representative state-of-the-art approaches against our proposed \ac{UTSR} architecture.
+
+\begin{table}[ht]
+    \centering
+    \caption{Comparative analysis of state-of-the-art orchestration and uncertainty frameworks.}
+    \label{tab:related_work_comparison}
+    \footnotesize
+    \begin{tabularx}{\textwidth}{p{3.2cm}ccccX}
+        \toprule
+        \textbf{Approach} & \textbf{\makecell{Decompose\\UQ?}} & \textbf{\makecell{Edge\\Ready?}} & \textbf{\makecell{Adaptive\\Routing?}} & \textbf{\makecell{HITL\\Aware?}} & \textbf{Primary Limitation} \\
+        \midrule
+        Standard Softmax Cascade & \texttimes & \checkmark & \texttimes & \texttimes & Severe miscalibration on OOD noise. \\
+        Semantic Entropy~\cite{kuhn2023semantic} & \texttimes & \texttimes & \texttimes & \texttimes & $O(N^2)$ NLI; conflates aleatoric with epistemic. \\
+        Bayesian Edge Dropout~\cite{kendall2017uncertainties} & \checkmark & Partial & \texttimes & \texttimes & High MC sampling latency on edge devices. \\
+        Selective Prediction / Deferral & \texttimes & \checkmark & Partial & \checkmark & Scalar thresholding floods human operators. \\
+        \midrule
+        \textbf{Proposed UTSR} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{\checkmark} & \textbf{Separates epistemic/aleatoric signals for optimal edge dispatch.} \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+As highlighted in \Cref{tab:related_work_comparison}, no existing framework simultaneously combines fine-grained uncertainty decomposition, edge-budgeted inference, and cost-aware multi-tier routing. This constitutes the primary research gap addressed in this thesis.

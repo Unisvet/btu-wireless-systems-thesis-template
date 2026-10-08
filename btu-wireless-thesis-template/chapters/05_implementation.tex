@@ -1,0 +1,89 @@
+% ==============================================================================
+% CHAPTER 5: IMPLEMENTATION & EXPERIMENTAL SETUP
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Implementation and Experimental Setup}
+\label{ch:implementation}
+
+\begin{takeawaybox}[Writing Guide: Chapter 5 --- Implementation]
+\textbf{Goal}: Document the practical engineering realization of your system in sufficient detail to guarantee exact reproducibility by another researcher.\\
+\textbf{Typical Length}: 10--15 pages (approx. 15--20\% of the thesis).\\
+\textbf{Key Elements}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Hardware Testbed}: Detailed specifications of edge boards, transceivers, processors, and sensors (\Cref{tab:hardware_specs}).
+    \item \textbf{Software Stack}: Operating system, frameworks, libraries, quantization toolchains.
+    \item \textbf{Dataset Details}: Source, train/val/test splits, sensor sampling frequencies, synthetic noise injection.
+    \item \textbf{Code Snippets}: Concise, well-commented code listings illustrating non-trivial components (\Cref{lst:nli_clustering}).
+\end{itemize}
+\end{takeawaybox}
+
+\section{Hardware and Testbed Configuration}
+\label{sec:impl_hardware}
+
+To validate \ac{UTSR} in realistic edge scenarios, experiments were conducted across a distributed laboratory testbed comprising two tiers of edge devices connected over IEEE 802.15.4 and Wi-Fi links. \Cref{tab:hardware_specs} summarizes the hardware specifications.
+
+\begin{table}[ht]
+    \centering
+    \caption{Hardware specifications of the edge experimental testbed.}
+    \label{tab:hardware_specs}
+    \footnotesize
+    \begin{tabularx}{\textwidth}{p{2.2cm}p{2.8cm}p{3.4cm}p{2.2cm}X}
+        \toprule
+        \textbf{Component} & \textbf{Device Model} & \textbf{Processor / Core} & \textbf{Memory} & \textbf{Role in Pipeline} \\
+        \midrule
+        Sensor Node & ESP32-WROOM-32 & Xtensa Dual-Core 32-bit & \SI{520}{\kibi\byte} SRAM & Ultrasonic telemetry capture \\
+        Edge Gateway & NVIDIA Jetson Orin Nano & 6-core ARM Cortex-A78AE & \SI{8}{\gibi\byte} LPDDR5 & Local inference \& UQ routing \\
+        Cloud Cluster & Server Node & Intel Xeon Gold 6330 & \SI{64}{\gibi\byte} RAM, A100 & High-tier escalation model \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{Software Stack and Model Optimization}
+\label{sec:impl_software}
+
+The software pipeline was implemented in Python 3.11 utilizing PyTorch and HuggingFace Transformers. To meet edge latency requirements, the local language model was quantized to 4-bit precision via AWQ and compiled using ONNX Runtime. The bidirectional NLI scoring module relies on a distilled DeBERTa-v3-small model.
+
+\Cref{lst:nli_clustering} illustrates the core Python implementation of the semantic equivalence graph construction.
+
+\begin{lstlisting}[language=Python, caption={Core implementation of bidirectional semantic clustering.}, label={lst:nli_clustering}]
+import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+def build_semantic_adjacency(samples, nli_model, tokenizer, threshold=0.5):
+    """
+    Constructs a semantic adjacency matrix from generated sequences
+    via bidirectional Natural Language Inference (NLI).
+    """
+    n = len(samples)
+    adjacency = torch.eye(n, dtype=torch.bool)
+    
+    for i in range(n):
+        for j in range(i + 1, n):
+            # Check entailment in both directions: s_i -> s_j and s_j -> s_i
+            pairs = [[samples[i], samples[j]], [samples[j], samples[i]]]
+            inputs = tokenizer(pairs, padding=True, return_tensors="pt")
+            with torch.no_grad():
+                logits = nli_model(**inputs).logits
+                probs = torch.softmax(logits, dim=-1)
+                
+            # Class index 2 corresponds to 'Entailment'
+            fwd_entail = probs[0, 2].item() > threshold
+            bwd_entail = probs[1, 2].item() > threshold
+            
+            if fwd_entail and bwd_entail:
+                adjacency[i, j] = True
+                adjacency[j, i] = True
+                
+    return adjacency
+\end{lstlisting}
+
+\section{Evaluation Datasets and Protocols}
+\label{sec:impl_datasets}
+
+We evaluate performance across three distinct benchmarks representing diverse uncertainty regimes:
+\begin{enumerate}
+    \item \textbf{HotpotQA}~\cite{yang2018hotpotqa}: A multi-hop reasoning benchmark where questions require chaining facts across Wikipedia articles. Characterized by predominantly \emph{epistemic} uncertainty.
+    \item \textbf{AmbigQA}~\cite{min2020ambigqa}: An open-domain benchmark containing inherently ambiguous queries with multiple plausible answers. Characterized by high \emph{aleatoric} uncertainty.
+    \item \textbf{Ultrasonic WSN Telemetry}: Real-world vibration and acoustic anomaly telemetry gathered from industrial sensor nodes at the Chair of Wireless Systems.
+\end{enumerate}

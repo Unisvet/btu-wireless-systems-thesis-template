@@ -1,0 +1,89 @@
+% ==============================================================================
+% CHAPTER 4: METHODOLOGY & SYSTEM ARCHITECTURE
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Methodology and System Architecture}
+\label{ch:methodology}
+
+\begin{takeawaybox}[Writing Guide: Chapter 4 --- Methodology]
+\textbf{Goal}: Formally describe your proposed system, conceptual framework, mathematical formulations, and algorithmic logic. This is the intellectual core of your engineering contribution.\\
+\textbf{Typical Length}: 12--18 pages (approx. 20--25\% of the thesis).\\
+\textbf{Key Elements}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{High-Level Architectural Overview}: Present a system diagram showing dataflow, modules, and interfaces.
+    \item \textbf{Formal Problem Formulation}: Define mathematical notations, state spaces, objective functions, and constraints.
+    \item \textbf{Detailed Subsystem Design}: Step-by-step description of each component.
+    \item \textbf{Algorithmic Formalization}: Formal pseudo-code (\Cref{alg:utsr_routing}) with precise inputs, outputs, and loops.
+\end{itemize}
+\end{takeawaybox}
+
+\section{System Architecture Overview}
+\label{sec:method_overview}
+
+The \ac{UTSR} system is structured as a three-tier hierarchical orchestration framework designed for resource-constrained wireless sensor networks and edge gateways. As illustrated conceptually in \Cref{fig:architecture_pipeline}, incoming telemetry streams and subtasks undergo localized inference, uncertainty decomposition, and type-conditioned routing.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tcolorbox}[colback=codeBackground, colframe=btuDarkGray, width=0.9\textwidth, arc=2mm, boxrule=0.5pt]
+        \centering
+        \vspace{0.5cm}
+        \sffamily
+        \textbf{[Sensor Nodes / Edge Devices]} \\
+        $\Downarrow$ \small Raw Telemetry / Query Stream \\
+        \textbf{[Local Inference \& Sampling Layer]} \\
+        $\Downarrow$ \small $N$ Stochastic Hypotheses $\mathbf{s}_1, \dots, \mathbf{s}_N$ \\
+        \textbf{[Uncertainty Decomposition Engine]} \\
+        \small Epistemic Signal $U_{\text{epi}}$ \quad $\longleftrightarrow$ \quad Aleatoric Signal $U_{\text{ale}}$ \\
+        $\Downarrow$ \small Multi-Tier Dynamic Router \\
+        \begin{tabular}{ccc}
+            $\swarrow$ & $\downarrow$ & $\searrow$ \\
+            \textbf{Local Memory / RAG} & \textbf{Upstream Cloud Model} & \textbf{Human Operator (HITL)} \\
+            \scriptsize (Low Cost, High Epistemic) & \scriptsize (High Cost, High Epistemic) & \scriptsize (Strict Safety, High Aleatoric)
+        \end{tabular}
+        \vspace{0.5cm}
+    \end{tcolorbox}
+    \caption{Conceptual architecture of the Uncertainty-Type-Driven Subtask Routing (UTSR) pipeline.}
+    \label{fig:architecture_pipeline}
+\end{figure}
+
+\section{Formal Problem Formulation}
+\label{sec:method_formulation}
+
+Let $\mathbf{x} \in \mathcal{X}$ denote an incoming subtask originating from a sensor cluster. The edge system maintains an ensemble of execution targets $\mathcal{A} = \{a_{\text{local}}, a_{\text{rag}}, a_{\text{cloud}}, a_{\text{human}}\}$ with associated operational cost vector $\mathbf{C} = [c_{\text{local}}, c_{\text{rag}}, c_{\text{cloud}}, c_{\text{human}}]^T \in \mathbb{R}^4_+$, where $c_{\text{local}} \ll c_{\text{rag}} < c_{\text{cloud}} \ll c_{\text{human}}$.
+
+The routing objective is to find a dispatching policy $\pi: \mathcal{X} \to \mathcal{A}$ that minimizes the expected cumulative latency and monetary cost while guaranteeing a minimum task success probability $\tau \in (0, 1)$:
+
+\begin{equation}
+    \min_{\pi} \; \mathbb{E}_{\mathbf{x}}\left[ C(\pi(\mathbf{x})) \right] \quad \text{subject to} \quad \mathbb{P}\left(\operatorname{Success}(\pi(\mathbf{x})) = 1\right) \ge \tau
+    \label{eq:optimization_objective}
+\end{equation}
+
+\section{Algorithmic Formalization}
+\label{sec:method_algorithm}
+
+\Cref{alg:utsr_routing} formalizes the complete dispatch procedure of the \ac{UTSR} routing engine.
+
+\begin{algorithm}[ht]
+\caption{Uncertainty-Type-Driven Subtask Routing (UTSR)}
+\label{alg:utsr_routing}
+\begin{algorithmic}[1]
+\Require Input subtask $\mathbf{x}$, edge model $f_{\boldsymbol{\theta}}$, sample count $N$, thresholds $\gamma_{\text{epi}}, \gamma_{\text{ale}}$.
+\Ensure Routed execution target $a^* \in \mathcal{A}$ and resulting output $\hat{y}$.
+\State Generate $N$ stochastic candidate outputs $\mathcal{S} = \{\mathbf{s}_1, \mathbf{s}_2, \dots, \mathbf{s}_N\} \sim f_{\boldsymbol{\theta}}(\cdot \mid \mathbf{x})$
+\State Cluster $\mathcal{S}$ into semantic equivalence classes $\mathcal{C} = \{c_1, \dots, c_K\}$ via bidirectional NLI (\Cref{eq:semantic_equivalence})
+\State Compute semantic entropy $\mathcal{H}_{\text{sem}}(\mathbf{x})$ according to \Cref{eq:semantic_entropy}
+\State Estimate epistemic uncertainty $U_{\text{epi}}(\mathbf{x}) \leftarrow \mathcal{H}_{\text{sem}}(\mathbf{x})$
+\State Estimate aleatoric variance $U_{\text{ale}}(\mathbf{x}) \leftarrow 1 - \max_k P(c_k \mid \mathbf{x})$
+\If{$U_{\text{epi}}(\mathbf{x}) \le \gamma_{\text{epi}}$ \textbf{and} $U_{\text{ale}}(\mathbf{x}) \le \gamma_{\text{ale}}$}
+    \State \Return $a_{\text{local}}, \hat{y} \leftarrow \operatorname{argmax}_{\mathbf{s} \in c_{\text{majority}}} p(\mathbf{s} \mid \mathbf{x})$ \Comment{High confidence local execution}
+\ElsIf{$U_{\text{epi}}(\mathbf{x}) > \gamma_{\text{epi}}$ \textbf{and} $U_{\text{ale}}(\mathbf{x}) \le \gamma_{\text{ale}}$}
+    \State Retrieve local domain context $\mathbf{z} \leftarrow \operatorname{Retrieve}(\mathbf{x})$
+    \State \Return $a_{\text{rag}}, \hat{y} \leftarrow f_{\boldsymbol{\theta}}(\cdot \mid \mathbf{x}, \mathbf{z})$ \Comment{Epistemic gap resolved by RAG}
+\ElsIf{$U_{\text{epi}}(\mathbf{x}) > \gamma_{\text{epi}}$ \textbf{and} $U_{\text{ale}}(\mathbf{x}) > \gamma_{\text{ale}}$}
+    \State \Return $a_{\text{cloud}}, \hat{y} \leftarrow \operatorname{ExecuteCloud}(\mathbf{x})$ \Comment{Escalate to large foundation model}
+\Else
+    \State \Return $a_{\text{human}}, \hat{y} \leftarrow \operatorname{QuerySupervisor}(\mathbf{x})$ \Comment{Severe irremediable ambiguity}
+\EndIf
+\end{algorithmic}
+\end{algorithm}

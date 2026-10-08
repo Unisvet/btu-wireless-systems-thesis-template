@@ -1,0 +1,78 @@
+% ==============================================================================
+% TITLE PAGE
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% Brandenburg University of Technology Cottbus-Senftenberg (BTU)
+% ==============================================================================
+
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+
+    % --------------------------------------------------------------------------
+    % University Logo
+    % --------------------------------------------------------------------------
+    \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{%
+        \includegraphics[height=1.8cm]{btu_logo_de.pdf}
+    }{%
+        \includegraphics[height=1.8cm]{btu_logo_en.png}
+    }
+
+    \vspace{1.8cm}
+
+    % --------------------------------------------------------------------------
+    % Thesis Title & Subtitle
+    % --------------------------------------------------------------------------
+    {\huge\bfseries\sffamily \ThesisTitle \par}
+    
+    \vspace{0.6cm}
+    \ifthenelse{\equal{\ThesisSubtitle}{}}{}{%
+        {\Large\sffamily\color{btuDarkGray} \ThesisSubtitle \par}
+        \vspace{0.8cm}
+    }
+
+    \vspace{1.0cm}
+
+    % --------------------------------------------------------------------------
+    % Thesis Type & Author
+    % --------------------------------------------------------------------------
+    {\LARGE\bfseries\sffamily\color{btuRed} \ThesisType \par}
+    
+    \vspace{0.6cm}
+    {\large \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{vorgelegt von}{by}\par}
+    \vspace{0.3cm}
+    {\LARGE\bfseries\sffamily \AuthorName \par}
+    \vspace{0.2cm}
+    {\large \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{Matrikelnummer}{Matriculation Number}: \StudentId \par}
+    \vspace{0.2cm}
+    {\large \DegreeProgram \par}
+
+    \vfill
+
+    % --------------------------------------------------------------------------
+    % Institutional Affiliation
+    % --------------------------------------------------------------------------
+    {\large \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{Vorgelegt am}{This report is submitted to the}\par}
+    \vspace{0.2cm}
+    {\large\bfseries\sffamily \ChairName \par}
+    {\normalsize \InstituteName\par}
+    {\normalsize \FacultyName\par}
+    {\normalsize \UniversityName\par}
+
+    \vspace{1.0cm}
+
+    % --------------------------------------------------------------------------
+    % Supervision & Date
+    % --------------------------------------------------------------------------
+    \begin{tabular}{rl}
+        \textbf{\ifthenelse{\equal{\ThesisLanguage}{ngerman}}{Erstgutachter / 1. Betreuer:}{Primary Supervisor:}} & \PrimarySupervisor \\
+        \textbf{\ifthenelse{\equal{\ThesisLanguage}{ngerman}}{Zweitgutachter / 2. Betreuer:}{Secondary Supervisor:}} & \SecondarySupervisor \\
+        \ifthenelse{\equal{\ExternalSupervisor}{}}{}{%
+            \textbf{\ifthenelse{\equal{\ThesisLanguage}{ngerman}}{Externer Betreuer:}{External Mentor:}} & \ExternalSupervisor \\
+        }
+    \end{tabular}
+
+    \vspace{1.0cm}
+
+    {\large \SubmissionCity, \SubmissionDate \par}
+
+\end{titlepage}

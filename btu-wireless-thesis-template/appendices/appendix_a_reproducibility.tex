@@ -1,0 +1,49 @@
+% ==============================================================================
+% APPENDIX A: REPRODUCIBILITY & ARTIFACT DETAILS
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Artifacts and Reproducibility Checklist}
+\label{ch:appendix_reproducibility}
+
+To support open science and facilitate experimental reproduction, this appendix provides full details regarding source code repositories, hardware artifacts, and software environments used in this thesis.
+
+\section{Software Repository and Open-Source Code}
+\label{sec:app_repo}
+
+The complete source code of the \ac{UTSR} routing pipeline, edge inference scripts, dataset loaders, and benchmark evaluation harnesses is maintained on GitHub:
+\begin{itemize}
+    \item \textbf{Repository URL}:\\ \url{https://github.com/chair-wireless-systems/utsr-edge-routing}
+    \item \textbf{License}: MIT Open Source License
+    \item \textbf{Archival DOI}:\\ \url{https://doi.org/10.5281/zenodo.12345678}
+\end{itemize}
+
+\section{Software Environment Specifications}
+\label{sec:app_environment}
+
+\Cref{tab:software_deps} lists the exact software packages and versions utilized during development and evaluation.
+
+\begin{table}[ht]
+    \centering
+    \caption{Key software libraries and versions.}
+    \label{tab:software_deps}
+    \small
+    \begin{tabularx}{\textwidth}{llX}
+        \toprule
+        \textbf{Package / Tool} & \textbf{Version} & \textbf{Purpose} \\
+        \midrule
+        Ubuntu Linux & 22.04.4 LTS & Host Operating System \\
+        Python & 3.11.8 & Primary Programming Language \\
+        PyTorch & 2.2.1+cu121 & Deep Learning Framework \\
+        HuggingFace Transformers & 4.38.2 & Model Architectures and NLI \\
+        ONNX Runtime & 1.17.1 & Edge Inference Acceleration \\
+        AWQ (AutoAWQ) & 0.2.4 & 4-bit Model Quantization \\
+        SciPy / NumPy & 1.12.0 / 1.26.4 & Mathematical and Statistical Analysis \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{Hardware Wiring and Pinout Configuration}
+\label{sec:app_hardware_wiring}
+
+The ultrasonic sensor transducer is wired to the ESP32 microcontroller via GPIO pins 18 (Trigger) and 19 (Echo), operating at a sampling frequency of \SI{40}{\kilo\hertz}. Sensor data is transmitted to the Jetson edge gateway over an encrypted IEEE 802.15.4 serial link.

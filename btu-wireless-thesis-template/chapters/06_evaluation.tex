@@ -1,0 +1,110 @@
+% ==============================================================================
+% CHAPTER 6: RESULTS AND EVALUATION
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Results and Experimental Evaluation}
+\label{ch:evaluation}
+
+\begin{takeawaybox}[Writing Guide: Chapter 6 --- Evaluation]
+\textbf{Goal}: Present the quantitative and empirical evidence answering your research questions. Compare your system directly against established baselines, conduct ablation studies, and evaluate system trade-offs.\\
+\textbf{Typical Length}: 12--20 pages (approx. 20--25\% of the thesis).\\
+\textbf{Key Elements}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Evaluation Metrics}: Formally define every metric before reporting numbers (e.g. Accuracy, AUROC, P95 latency in \si{\milli\second}, Energy in \si{\joule}).
+    \item \textbf{Baseline Comparison}: Structured results table with bold best values (\Cref{tab:benchmark_results}).
+    \item \textbf{Ablation Study}: Isolate the individual contribution of each component.
+    \item \textbf{Visual Plots}: Clean graphs and multi-panel figures (\Cref{fig:tradeoff_plots}).
+    \item \textbf{Direct Link to RQs}: Explicitly state which experiment answers which research question.
+\end{itemize}
+\end{takeawaybox}
+
+\section{Evaluation Metrics}
+\label{sec:eval_metrics}
+
+To evaluate performance comprehensively across both algorithmic and wireless systems dimensions, we measure:
+\begin{itemize}
+    \item \textbf{Task Success Rate (\%)}: Percentage of subtasks answered correctly according to exact match (EM) or semantic equivalence with ground truth.
+    \item \textbf{Unnecessary Escalation Rate (UER, \%)}: Proportion of queries escalated to cloud or human intervention that could have been resolved locally.
+    \item \textbf{End-to-End Latency (\si{\milli\second})}: 95th percentile (P95) execution latency measured from query arrival at the edge gateway to final response delivery.
+    \item \textbf{Wireless Egress Overhead (\si{\kibi\byte})}: Mean upstream payload transmitted over the backhaul link per 1,000 queries.
+\end{itemize}
+
+\section{Benchmark Performance Comparison}
+\label{sec:eval_benchmarks}
+
+\Cref{tab:benchmark_results} summarizes the performance of \ac{UTSR} compared to three baseline dispatching strategies: (1) Local Only, (2) Softmax Confidence Thresholding, and (3) Monolithic Semantic Entropy~\cite{kuhn2023semantic}.
+
+\begin{table}[ht]
+    \centering
+    \caption{Empirical evaluation across HotpotQA, AmbigQA, and WSN Anomaly benchmarks.}
+    \label{tab:benchmark_results}
+    \footnotesize
+    \begin{tabularx}{\textwidth}{Xcccc}
+        \toprule
+        \textbf{Routing Strategy} & \textbf{\makecell{Success\\Rate (\%) $\uparrow$}} & \textbf{\makecell{Unnecessary\\Escalations (\%) $\downarrow$}} & \textbf{\makecell{P95 Latency\\(\si{\milli\second}) $\downarrow$}} & \textbf{\makecell{Egress Overhead\\(\si{\kibi\byte/query}) $\downarrow$}} \\
+        \midrule
+        Local-Only Execution & 61.4 & --- & \textbf{48.2} & \textbf{0.00} \\
+        Softmax Confidence Threshold & 74.8 & 42.1 & 312.5 & 14.82 \\
+        Monolithic Semantic Entropy~\cite{kuhn2023semantic} & 82.3 & 28.6 & 486.0 & 9.40 \\
+        \midrule
+        \textbf{Proposed UTSR (Ours)} & \textbf{86.7} & \textbf{11.3} & \textbf{228.4} & \textbf{5.16} \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+As demonstrated in \Cref{tab:benchmark_results}, \ac{UTSR} achieves the highest task success rate (\SI{86.7}{\percent}) while cutting unnecessary escalations down to \SI{11.3}{\percent}---a relative reduction of over \SI{60}{\percent} compared to monolithic semantic entropy.
+
+\section{System Trade-offs and Latency Analysis}
+\label{sec:eval_tradeoffs}
+
+\Cref{fig:tradeoff_plots} visualizes the latency and escalation trade-offs across varying network traffic conditions.
+
+\begin{figure}[ht]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \begin{tcolorbox}[colback=codeBackground, colframe=codeBorder, height=4.5cm, halign=center, valign=center]
+            \sffamily\bfseries [P95 Latency vs. Query Rate]\\
+            \small\normalfont UTSR maintains $<$\SI{250}{\milli\second} latency under high traffic load by offloading solely reducible epistemic queries.
+        \end{tcolorbox}
+        \caption{End-to-end latency scaling.}
+        \label{fig:latency_scaling}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \begin{tcolorbox}[colback=codeBackground, colframe=codeBorder, height=4.5cm, halign=center, valign=center]
+            \sffamily\bfseries [Human Intervention vs. Noise]\\
+            \small\normalfont UTSR suppresses false-alarm HITL escalations under synthetic sensor noise injection.
+        \end{tcolorbox}
+        \caption{Human escalation suppression.}
+        \label{fig:hitl_suppression}
+    \end{subfigure}
+    \caption{Trade-off analysis of latency and human intervention across operating regimes.}
+    \label{fig:tradeoff_plots}
+\end{figure}
+
+\section{Ablation Study}
+\label{sec:eval_ablation}
+
+To isolate the contribution of individual components, we conducted an ablation study summarized in \Cref{tab:ablation_study}.
+
+\begin{table}[ht]
+    \centering
+    \caption{Ablation analysis of individual architectural components in UTSR.}
+    \label{tab:ablation_study}
+    \footnotesize
+    \begin{tabularx}{\textwidth}{Xcccc}
+        \toprule
+        \textbf{Configuration} & \textbf{\makecell{Success\\Rate (\%)}} & \textbf{\makecell{Escalation\\Reduction (\%)}} & \textbf{\makecell{Edge Compute\\Time (\si{\milli\second})}} & \textbf{\makecell{P95 Latency\\(\si{\milli\second})}} \\
+        \midrule
+        Full UTSR Pipeline & \textbf{86.7} & \textbf{38.2} & 34.2 & \textbf{228.4} \\
+        \quad w/o Bidirectional NLI Check & 79.1 & 19.4 & \textbf{16.8} & 295.0 \\
+        \quad w/o Semantic Entropy (Token Only) & 71.5 & 8.7 & 19.1 & 340.2 \\
+        \quad w/o Local RAG Cache & 80.4 & 22.1 & 31.0 & 410.8 \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+The ablation results confirm that bidirectional NLI and semantic clustering are essential: omitting bidirectional verification leads to an \SI{18.8}{\percent} drop in escalation reduction due to spurious semantic equivalence assignments.

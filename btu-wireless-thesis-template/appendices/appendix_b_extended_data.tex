@@ -1,0 +1,36 @@
+% ==============================================================================
+% APPENDIX B: EXTENDED CONFIGURATIONS & HYPERPARAMETERS
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Extended Hyperparameters and Evaluation Tables}
+\label{ch:appendix_hyperparams}
+
+This appendix provides exhaustive tabular listings of model hyperparameters, decision threshold grids, and extended experimental results across all benchmark configurations.
+
+\section{Hyperparameter Grid Configuration}
+\label{sec:app_grid}
+
+\Cref{tab:hyperparameters_detail} lists the exact hyperparameter grid evaluated during the threshold calibration phase described in \Cref{ch:evaluation}.
+
+\begin{table}[ht]
+    \centering
+    \caption{Hyperparameter search space and selected optimal configurations.}
+    \label{tab:hyperparameters_detail}
+    \begin{tabularx}{\textwidth}{llXl}
+        \toprule
+        \textbf{Parameter} & \textbf{Symbol} & \textbf{Tested Grid} & \textbf{Selected Optimal} \\
+        \midrule
+        Stochastic Samples & $N$ & $\{3, 5, 8, 10, 15\}$ & $5$ \\
+        Generation Temperature & $T$ & $\{0.3, 0.5, 0.7, 1.0\}$ & $0.7$ \\
+        NLI Entailment Threshold & $\tau_{\text{nli}}$ & $\{0.4, 0.5, 0.6, 0.7\}$ & $0.5$ \\
+        Epistemic Threshold & $\gamma_{\text{epi}}$ & $[0.20, 0.80]$ in steps of $0.05$ & $0.45$ \\
+        Aleatoric Threshold & $\gamma_{\text{ale}}$ & $[0.15, 0.60]$ in steps of $0.05$ & $0.30$ \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\section{Statistical Significance Tests}
+\label{sec:app_significance}
+
+To verify that the performance gains of \ac{UTSR} over the baseline methods are statistically meaningful, paired two-tailed Welch's $t$-tests were conducted across 5 evaluation folds. For the comparison against monolithic semantic entropy on HotpotQA accuracy, the difference is statistically significant ($t = 4.82, p < 0.001$). Similarly, the reduction in unnecessary escalations yielded a statistically significant difference ($t = 6.19, p < 0.0001$).

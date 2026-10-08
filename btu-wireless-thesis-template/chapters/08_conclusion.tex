@@ -1,0 +1,54 @@
+% ==============================================================================
+% CHAPTER 8: CONCLUSION AND FUTURE WORK
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Conclusion and Future Work}
+\label{ch:conclusion}
+
+\begin{takeawaybox}[Writing Guide: Chapter 8 --- Conclusion]
+\textbf{Goal}: Summarize the thesis, provide explicit, definitive answers to every Research Question formulated in Chapter 1, reiterate the main contributions, and outline exciting future work directions.\\
+\textbf{Typical Length}: 3--5 pages (approx. 5\% of the thesis).\\
+\textbf{Mandatory Structure}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Summary of the Thesis}: Concise recap of the challenge and the proposed solution.
+    \item \textbf{Definitive Answers to Research Questions}: Explicit subsections addressing RQ1, RQ2, and RQ3 one-by-one.
+    \item \textbf{Summary of Contributions}: Reiterate the tangible scientific artifacts delivered.
+    \item \textbf{Future Research Directions}: Concrete, feasible extensions for subsequent Master's theses or Ph.D. research.
+\end{itemize}
+\end{takeawaybox}
+
+\section{Summary of the Thesis}
+\label{sec:concl_summary}
+
+This Master's thesis addressed the challenge of dependable and resource-efficient decision orchestration in distributed wireless sensor networks and edge AI environments. Prior approaches conflated epistemic and aleatoric uncertainties into a single scalar confidence score, causing significant resource waste through unnecessary cloud escalations and overwhelming human operators with benign queries. To overcome these limitations, we designed, implemented, and empirically evaluated \emph{Uncertainty-Type-Driven Subtask Routing} (\ac{UTSR}).
+
+\section{Answers to the Research Questions}
+\label{sec:concl_answers}
+
+Through rigorous theoretical formulation, software prototyping, and empirical evaluation, this thesis provides definitive answers to the research questions posed in \Cref{ch:introduction}:
+
+\subsection*{Answer to RQ1: Orthogonal Uncertainty Decomposition}
+\textit{How can epistemic and aleatoric uncertainty signals be reliably and efficiently separated in sequential decision pipelines using lightweight semantic clustering at the wireless edge?}
+
+We demonstrated that combining stochastic sample generation with bidirectional \ac{NLI} graph clustering enables robust decomposition into semantic entropy ($U_{\text{epi}}$) and residual dispersion ($U_{\text{ale}}$). By deploying a distilled cross-encoder and caching semantic representations, the edge gateway executes this decomposition in under \SI{35}{\milli\second}, making real-time type separation feasible even on resource-constrained embedded nodes.
+
+\subsection*{Answer to RQ2: Routing Efficiency and Resource Optimization}
+\textit{To what extent does routing subtasks conditioned on uncertainty type reduce unnecessary cloud escalations and inference latency compared to scalar confidence baselines?}
+
+Empirical evaluations across the HotpotQA, AmbigQA, and ultrasonic WSN benchmarks confirmed that \ac{UTSR} reduces unnecessary escalations by \SI{60.5}{\percent} relative to monolithic semantic entropy and lowers P95 end-to-end latency to \SI{228.4}{\milli\second} (a \SI{27.2}{\percent} latency reduction). By offloading only genuinely reducible epistemic queries to the cloud backhaul, the system cuts wireless egress bandwidth by more than half.
+
+\subsection*{Answer to RQ3: Human-in-the-Loop Deferral Reliability}
+\textit{How does type-driven selective prediction affect the precision of human-in-the-loop escalations in mission-critical sensor monitoring tasks?}
+
+By isolating irreducible aleatoric ambiguities from routine missing knowledge, \ac{UTSR} suppresses false-alarm deferrals by \SI{38.2}{\percent}. Human operators are engaged exclusively when sensory data is genuinely ambiguous or contradictory, preserving scarce human attention for truly critical decision boundaries.
+
+\section{Future Research Directions}
+\label{sec:concl_future}
+
+The findings of this thesis open several promising avenues for future research at the Chair of Wireless Systems:
+\begin{enumerate}
+    \item \textbf{Hardware Acceleration on Neuromorphic / RISC-V Silicon}: Investigating the offloading of bidirectional NLI inference to specialized low-power RISC-V vector accelerators or edge neuromorphic processors to achieve sub-\SI{10}{\milli\second} latency.
+    \item \textbf{Channel-State-Aware Uncertainty Routing}: Extending the routing cost function to incorporate real-time physical layer metrics, such as \ac{RSSI}, \ac{SNR}, and packet error rates, dynamically adjusting escalation thresholds based on instantaneous wireless link quality.
+    \item \textbf{Multimodal Uncertainty Fusion}: Generalizing \ac{UTSR} from textual and scalar sensor streams to continuous video, radar, and lidar telemetry for autonomous driving and robotics.
+\end{enumerate}

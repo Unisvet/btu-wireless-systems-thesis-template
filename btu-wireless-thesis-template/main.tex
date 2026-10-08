@@ -1,0 +1,124 @@
+% ==============================================================================
+% MASTER THESIS TEMPLATE
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% Brandenburg University of Technology Cottbus-Senftenberg (BTU)
+% ==============================================================================
+% Author: Chair of Wireless Systems, BTU Cottbus-Senftenberg
+% Compatible with: pdfLaTeX, LuaLaTeX, XeLaTeX, Overleaf, TeX Live, MiKTeX
+% ==============================================================================
+
+\RequirePackage{ifthen}
+
+% ------------------------------------------------------------------------------
+% 1. Load User Metadata & Configuration
+% ------------------------------------------------------------------------------
+\input{metadata.tex}
+
+% ------------------------------------------------------------------------------
+% 2. Document Class (KOMA-Script Report)
+% ------------------------------------------------------------------------------
+\documentclass[
+    fontsize=11pt,
+    paper=a4,
+    parskip=half,               % Half-line paragraph spacing instead of indent
+    headings=normal,            % Professional heading sizing
+    bibliography=totoc,         % Include bibliography in Table of Contents
+    listof=totoc,               % Include List of Figures/Tables in TOC
+    captions=tableheading,      % Proper spacing for table captions above tables
+    cleardoublepage=empty,      % Clean blank pages between chapters
+    oneside                     % Use 'twoside,openright' if printing double-sided book
+]{scrreprt}
+
+% ------------------------------------------------------------------------------
+% 3. Load Packages, Typography, and Styling
+% ------------------------------------------------------------------------------
+\input{settings.tex}
+
+% ==============================================================================
+% DOCUMENT BEGIN
+% ==============================================================================
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% FRONT MATTER: Title Page, Declaration, Abstract, Lists
+% ------------------------------------------------------------------------------
+\pagenumbering{roman}
+\pagestyle{plain}
+
+% 1. Title Page (Official Chair of Wireless Systems layout)
+\input{frontmatter/titlepage.tex}
+
+% 2. Mandatory Declaration of Authenticity (BTU + AI-Tools Affidavit)
+\input{frontmatter/declaration.tex}
+
+% 3. Abstract (English) & Kurzfassung (German)
+\input{frontmatter/abstract.tex}
+
+% 4. Acknowledgments (Optional)
+\input{frontmatter/acknowledgments.tex}
+
+% 5. Table of Contents
+\cleardoublepage
+\tableofcontents
+
+% 6. List of Figures & List of Tables
+\cleardoublepage
+\listoffigures
+
+\cleardoublepage
+\listoftables
+
+% 7. List of Abbreviations / Acronyms
+\cleardoublepage
+\input{frontmatter/acronyms.tex}
+
+% ------------------------------------------------------------------------------
+% MAIN MATTER: Thesis Chapters
+% ------------------------------------------------------------------------------
+\cleardoublepage
+\pagenumbering{arabic}
+\pagestyle{scrheadings}
+
+% Chapter 1: Introduction (Motivation, Problem, RQs, Contributions, Outline)
+\input{chapters/01_introduction.tex}
+
+% Chapter 2: Theoretical & Technical Background
+\input{chapters/02_background.tex}
+
+% Chapter 3: Related Work & State of the Art (Comparative Survey & Gap)
+\input{chapters/03_related_work.tex}
+
+% Chapter 4: Methodology & System Architecture (Formal Model, Algorithms)
+\input{chapters/04_methodology.tex}
+
+% Chapter 5: Implementation & Experimental Setup (Testbed, Data, Code)
+\input{chapters/05_implementation.tex}
+
+% Chapter 6: Results & Evaluation (Benchmarks, Ablations, Latency Tradeoffs)
+\input{chapters/06_evaluation.tex}
+
+% Chapter 7: Discussion & Limitations (Analysis, Threats to Validity)
+\input{chapters/07_discussion.tex}
+
+% Chapter 8: Conclusion & Future Work (Summary, RQs Answered, Future Lines)
+\input{chapters/08_conclusion.tex}
+
+% ------------------------------------------------------------------------------
+% APPENDIX
+% ------------------------------------------------------------------------------
+\cleardoublepage
+\appendix
+
+% Appendix A: Artifacts, Code Repository & Reproducibility Checklist
+\input{appendices/appendix_a_reproducibility.tex}
+
+% Appendix B: Extended Hyperparameter Grids & Full Evaluation Tables
+\input{appendices/appendix_b_extended_data.tex}
+
+% ------------------------------------------------------------------------------
+% BACK MATTER: Bibliography
+% ------------------------------------------------------------------------------
+\cleardoublepage
+\printbibliography[heading=bibintoc]
+
+\end{document}

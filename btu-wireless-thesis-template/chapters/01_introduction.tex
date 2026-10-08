@@ -1,0 +1,94 @@
+% ==============================================================================
+% CHAPTER 1: INTRODUCTION
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Introduction}
+\label{ch:introduction}
+
+\begin{takeawaybox}[Writing Guide: Chapter 1 --- Introduction]
+\textbf{Goal}: Hook the reader, establish the real-world and scientific context, define the precise research gap, formalize your research questions, and outline your core contributions.\\
+\textbf{Typical Length}: 5--8 pages (approx. 8--10\% of the thesis).\\
+\textbf{Key Components}:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Motivation \& Context}: Why is this problem important now? (e.g. edge computing, autonomous wireless networks, LLM reliability).
+    \item \textbf{Problem Statement \& Research Gap}: What is the specific limitation in existing literature or engineering practice?
+    \item \textbf{Research Questions (RQs) \& Hypotheses}: 2 to 4 crisp, answerable research questions.
+    \item \textbf{Proposed Approach}: A high-level overview of your solution before diving into details.
+    \item \textbf{Key Contributions}: Bulleted list of tangible scientific and engineering deliverables.
+    \item \textbf{Scope and Delimitations}: What is deliberately inside vs. outside the scope of this thesis.
+    \item \textbf{Thesis Outline}: Roadmap guide to the subsequent chapters.
+\end{enumerate}
+\end{takeawaybox}
+
+\section{Motivation and Context}
+\label{sec:intro_motivation}
+
+The rapid convergence of \acp{WSN}, edge computing architectures, and modern \ac{AI} has unlocked unprecedented capabilities in autonomous monitoring, cyber-physical systems, and industrial IoT~\cite{langendoerfer2021resilience,meissner2023edge}. Autonomous decision-making agents deployed at the network edge increasingly utilize foundation models, such as \acp{LLM}, to interpret noisy telemetry, orchestrate subtasks, and dynamically adapt to volatile wireless channel conditions~\cite{pechlivanidou2022survey}.
+
+However, operating machine learning pipelines in real-time, distributed edge environments introduces severe dependability challenges. Unlike centralized cloud clusters, edge nodes operate under stringent energy, memory, and communication bandwidth constraints. When an edge model encounters unexpected sensory data, ambiguous inputs, or out-of-distribution events, it must decide whether to process the query locally, escalate to a larger cloud model, or request assistance from a human operator~\cite{kendall2017uncertainties}.
+
+\section{Problem Statement and Research Gap}
+\label{sec:intro_problem}
+
+Current orchestration dispatchers predominantly treat predictive uncertainty as a monolithic scalar quantity (e.g., softmax entropy or raw confidence scores). This simplistic treatment creates a severe systemic failure mode:
+\begin{itemize}
+    \item \textbf{Conflation of Uncertainty Types}: Standard dispatchers cannot distinguish between \emph{epistemic uncertainty} (which stems from a model's lack of knowledge and can be resolved by retrieving additional context or consulting a larger model) and \emph{aleatoric uncertainty} (which stems from inherent ambiguity, sensor noise, or irremediable stochasticity in the environment)~\cite{kuhn2023semantic,kendall2017uncertainties}.
+    \item \textbf{Suboptimal Routing \& Resource Waste}: Treating all high-uncertainty events identically causes pipelines to waste computational energy and network bandwidth escalating aleatoric queries to high-tier cloud models, which fail just as reliably as small models because the ground truth itself is fundamentally ambiguous.
+    \item \textbf{Excessive Human Oversight Costs}: Conversely, systems defer benign, solvable epistemic queries to costly human operators, overwhelming human oversight in large-scale sensor deployments.
+\end{itemize}
+
+\section{Research Questions and Hypotheses}
+\label{sec:intro_rqs}
+
+To address this gap, this thesis investigates the design, implementation, and empirical validation of an uncertainty-type-driven orchestration architecture for distributed wireless systems. We formulate the following core research questions:
+
+\begin{researchquestion}[Research Question 1 (RQ1)]
+\textbf{RQ1: Orthogonal Uncertainty Decomposition}\\
+How can epistemic and aleatoric uncertainty signals be reliably and efficiently separated in sequential decision pipelines using lightweight semantic clustering at the wireless edge?
+\end{researchquestion}
+
+\begin{researchquestion}[Research Question 2 (RQ2)]
+\textbf{RQ2: Routing Efficiency and Resource Optimization}\\
+To what extent does routing subtasks conditioned on uncertainty type reduce unnecessary cloud escalations and inference latency compared to scalar confidence baselines?
+\end{researchquestion}
+
+\begin{researchquestion}[Research Question 3 (RQ3)]
+\textbf{RQ3: Human-in-the-Loop Deferral Reliability}\\
+How does type-driven selective prediction affect the precision of human-in-the-loop escalations in mission-critical sensor monitoring tasks?
+\end{researchquestion}
+
+\section{Proposed Approach: UTSR in Brief}
+\label{sec:intro_approach}
+
+This work introduces \ac{UTSR}, a modular routing framework designed for resilient edge intelligence. \ac{UTSR} decomposes prediction variance into orthogonal epistemic and aleatoric metrics by coupling semantic entropy estimation with bidirectional Natural Language Inference (\ac{NLI}). When epistemic uncertainty dominates, the subtask is routed to local vector memory retrieval (\ac{RAG}) or an upstream model. When aleatoric uncertainty dominates, the subtask triggers multi-hypothesis disambiguation or selective deferral to human supervisors, eliminating wasteful computation.
+
+\section{Key Contributions}
+\label{sec:intro_contributions}
+
+The primary contributions of this Master's thesis are summarized as follows:
+\begin{enumerate}
+    \item \textbf{Formal Framework for Uncertainty Routing}: We formalize the distinction between epistemic and aleatoric dispatching in distributed edge pipelines.
+    \item \textbf{Lightweight Edge-Compatible Implementation}: We develop a concrete implementation of \ac{UTSR} optimized for resource-constrained edge hardware.
+    \item \textbf{Empirical Benchmark Evaluation}: We evaluate the approach across established multi-hop reasoning datasets (HotpotQA~\cite{yang2018hotpotqa}) and ambiguous QA datasets (AmbigQA~\cite{min2020ambigqa}).
+    \item \textbf{Physical Sensor Network Validation}: We deploy \ac{UTSR} on an ultrasonic wireless sensor testbed, measuring real-world latency, energy consumption, and communication overhead.
+\end{enumerate}
+
+\section{Scope and Delimitations}
+\label{sec:intro_scope}
+
+This thesis focuses specifically on inference-time routing and decision orchestration for natural language and sensor-derived telemetry. Full model parameter fine-tuning and hardware ASIC acceleration are considered outside the direct scope of this study.
+
+\section{Thesis Outline}
+\label{sec:intro_outline}
+
+The remainder of this thesis is structured as follows:
+\begin{itemize}
+    \item \Cref{ch:background} provides the theoretical foundations of wireless edge architectures, uncertainty quantification, and deep learning pipelines.
+    \item \Cref{ch:related_work} surveys the state of the art in edge orchestration and uncertainty estimation, highlighting the research gap.
+    \item \Cref{ch:methodology} formalizes the \ac{UTSR} architecture and mathematical formulation.
+    \item \Cref{ch:implementation} details the software stack, edge testbed configuration, and dataset preprocessing.
+    \item \Cref{ch:evaluation} presents the empirical results, benchmark performance, and ablation studies.
+    \item \Cref{ch:discussion} discusses experimental findings, architectural trade-offs, and threats to validity.
+    \item \Cref{ch:conclusion} concludes the thesis, answers the research questions, and outlines avenues for future research.
+\end{itemize}

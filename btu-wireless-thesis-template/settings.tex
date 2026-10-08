@@ -1,0 +1,227 @@
+% ==============================================================================
+% SETTINGS & PACKAGE CONFIGURATION
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% Brandenburg University of Technology Cottbus-Senftenberg (BTU)
+% ==============================================================================
+
+\PassOptionsToPackage{hyphens}{url}
+
+% ------------------------------------------------------------------------------
+% 1. Encoding, Language & Typography
+% ------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[\ThesisLanguage]{babel}
+\usepackage{csquotes}
+\usepackage{microtype} % High-quality micro-typographic justifications
+\usepackage{enumitem}  % Flexible list layout control
+
+% ------------------------------------------------------------------------------
+% 2. Mathematics & Technical Symbols (Load before math fonts)
+% ------------------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{bm}        % Bold math symbols
+
+% ------------------------------------------------------------------------------
+% 3. Font Selection
+% ------------------------------------------------------------------------------
+% Palatino + Helvetica (Professional, modern & widely favored in engineering)
+\usepackage{newpxtext}
+\usepackage{newpxmath}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{inconsolata} % Clean monospaced font for code
+
+% ------------------------------------------------------------------------------
+% 4. Page Geometry & Layout
+% ------------------------------------------------------------------------------
+\ifthenelse{\boolean{TwoSidedPrinting}}{%
+    \usepackage[
+        a4paper,
+        bindingoffset=6mm,
+        left=28mm,
+        right=26mm,
+        top=30mm,
+        bottom=32mm,
+        footskip=14mm,
+        headheight=16pt
+    ]{geometry}
+}{%
+    \usepackage[
+        a4paper,
+        left=30mm,
+        right=28mm,
+        top=30mm,
+        bottom=32mm,
+        footskip=14mm,
+        headheight=16pt
+    ]{geometry}
+}
+
+% ------------------------------------------------------------------------------
+% 4. Headers & Footers (KOMA-Script scrlayer-scrpage)
+% ------------------------------------------------------------------------------
+\usepackage[automark, headsepline=0.5pt, footsepline=false]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\ihead{\headmark}
+\ohead{}
+\cfoot{\pagemark}
+\setkomafont{pageheadfoot}{\small\sffamily}
+\setkomafont{pagenumber}{\small\sffamily}
+
+% ------------------------------------------------------------------------------
+% 5. BTU Corporate Colors & Graphics
+% ------------------------------------------------------------------------------
+\usepackage{xcolor}
+% BTU Cottbus-Senftenberg Corporate Colors
+\definecolor{btuRed}{RGB}{186, 0, 50}       % BTU Primary Red #BA0032
+\definecolor{btuDarkRed}{RGB}{140, 0, 35}   % BTU Dark Red
+\definecolor{btuDarkGray}{RGB}{51, 51, 51}  % BTU Charcoal
+\definecolor{btuLightGray}{RGB}{245, 245, 247}
+\definecolor{codeBackground}{RGB}{248, 249, 250}
+\definecolor{codeBorder}{RGB}{222, 226, 230}
+\definecolor{codeKeyword}{RGB}{0, 51, 153}
+\definecolor{codeComment}{RGB}{108, 117, 125}
+\definecolor{codeString}{RGB}{163, 21, 21}
+
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{subcaption} % Modern subfigure and subcaption support
+\usepackage{pdfpages}   % For embedding external signed PDFs
+
+
+% ------------------------------------------------------------------------------
+% 7. Tables & Physical Units
+% ------------------------------------------------------------------------------
+\usepackage{booktabs}   % Publication quality tables (\toprule, \midrule, \bottomrule)
+\usepackage{tabularx}   % Auto-wrapping flexible tables
+\usepackage{multirow}   % Multi-row table cells
+\usepackage{makecell}   % Clean line breaks inside table cells
+\usepackage{array}
+
+\usepackage{siunitx}    % Standard international physical units
+\sisetup{
+    locale = UK,
+    per-mode = symbol,
+    separate-uncertainty = true
+}
+
+% ------------------------------------------------------------------------------
+% 8. Algorithms & Pseudo-Code
+% ------------------------------------------------------------------------------
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+% ------------------------------------------------------------------------------
+% 9. Code Listings (Syntax Highlighting)
+% ------------------------------------------------------------------------------
+\usepackage{listings}
+\lstset{
+    backgroundcolor=\color{codeBackground},
+    basicstyle=\small\ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{codeComment}\itshape,
+    deletekeywords={},
+    escapeinside={\%*}{*)},
+    extendedchars=true,
+    firstnumber=1,
+    frame=single,
+    framerule=0.5pt,
+    rulecolor=\color{codeBorder},
+    keepspaces=true,
+    keywordstyle=\color{codeKeyword}\bfseries,
+    morekeywords={},
+    numbers=left,
+    numbersep=8pt,
+    numberstyle=\tiny\color{codeComment},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    stepnumber=1,
+    stringstyle=\color{codeString},
+    tabsize=2,
+    title=\lstname
+}
+
+% ------------------------------------------------------------------------------
+% 10. Callout Boxes & Environments (tcolorbox)
+% ------------------------------------------------------------------------------
+\usepackage[most]{tcolorbox}
+\newtcolorbox{researchquestion}[1][]{
+    colback=btuLightGray,
+    colframe=btuRed,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    arc=2mm,
+    boxrule=1pt,
+    left=4mm,
+    right=4mm,
+    top=3mm,
+    bottom=3mm
+}
+
+\newtcolorbox{takeawaybox}[1][]{
+    colback=btuLightGray,
+    colframe=btuDarkGray,
+    fonttitle=\bfseries\sffamily,
+    title=#1,
+    arc=2mm,
+    boxrule=1pt,
+    left=4mm,
+    right=4mm,
+    top=3mm,
+    bottom=3mm
+}
+
+% ------------------------------------------------------------------------------
+% 11. Acronyms & Abbreviations
+% ------------------------------------------------------------------------------
+\usepackage[printonlyused, withpage]{acronym}
+
+% ------------------------------------------------------------------------------
+% 12. Bibliography (BibLaTeX + Biber)
+% ------------------------------------------------------------------------------
+\usepackage[
+    backend=biber,
+    style=ieee,
+    sorting=none,
+    isbn=false,
+    doi=true,
+    url=true,
+    date=year
+]{biblatex}
+\addbibresource{bibliography/references.bib}
+
+% ------------------------------------------------------------------------------
+% 13. Hyperlinks & PDF Metadata
+% ------------------------------------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=btuDarkRed,
+    citecolor=btuDarkRed,
+    urlcolor=btuRed,
+    pdftitle={\ThesisTitle},
+    pdfauthor={\AuthorName},
+    pdfsubject={\ThesisType{} - \ChairName, \UniversityName},
+    pdfkeywords={\ThesisKeywords},
+    pdfcreator={LaTeX with KOMA-Script and Chair of Wireless Systems Template},
+    pdfproducer={pdflatex/biber}
+}
+
+% ------------------------------------------------------------------------------
+% 14. Clever Cross-Referencing (Load after hyperref)
+% ------------------------------------------------------------------------------
+\usepackage[nameinlink, capitalize, noabbrev]{cleveref}
+
+% ------------------------------------------------------------------------------
+% 15. KOMA-Script Font Styling for Headings
+% ------------------------------------------------------------------------------
+\setkomafont{disposition}{\bfseries\sffamily}
+\setkomafont{title}{\bfseries\sffamily}
+\setkomafont{subtitle}{\normalfont\Large\sffamily}

@@ -1,0 +1,152 @@
+% ==============================================================================
+% DECLARATION OF AUTHENTICITY / EIDESSTATTLICHE ERKLÄRUNG
+% Official Chair of Wireless Systems (Fachgebiet Drahtlose Systeme) Template
+% Compliance: BTU RahmenO-BA/MA & Mandatory Chair Policy on Generative AI Tools
+% Ref: https://www.b-tu.de/en/fg-drahtlose-systeme/teaching/thesis
+% Ref: https://www.b-tu.de/forschung/profil/forschungsethik/umgang-mit-ki-tools#c369137
+% ==============================================================================
+
+\ifthenelse{\boolean{IncludeSignedDeclarationScan}}{%
+    % --------------------------------------------------------------------------
+    % Option A: Include externally scanned and signed PDF
+    % Place your signed PDF as 'frontmatter/declaration_signed.pdf'
+    % --------------------------------------------------------------------------
+    \IfFileExists{frontmatter/declaration_signed.pdf}{%
+        \includepdf[pages=1, pagecommand={\thispagestyle{empty}}]{frontmatter/declaration_signed.pdf}
+    }{%
+        \PackageWarning{declaration}{declaration_signed.pdf not found! Typesetting digital declaration instead.}
+        \input{frontmatter/declaration_content.tex}
+    }
+}{%
+    % --------------------------------------------------------------------------
+    % Option B: Clean LaTeX typeset declaration
+    % --------------------------------------------------------------------------
+    \thispagestyle{empty}
+    \vspace*{0.5cm}
+
+    \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{%
+        % ======================================================================
+        % DEUTSCHE VERSION
+        % ======================================================================
+        {\Large\bfseries\sffamily Eidesstattliche Erklärung\par}
+        \vspace{0.6cm}
+
+        Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig verfasst und dass ich sie zuvor an keiner anderen Hochschule und in keinem anderen Studiengang als Prüfungsleistung eingereicht habe.
+
+        \vspace{0.3cm}
+        Ich versichere, dass ich alle verwendeten Quellen und Hilfsmittel, die ich zur Bearbeitung der Arbeit herangezogen habe, vollständig und korrekt angegeben habe.
+
+        \vspace{0.3cm}
+        Alle Stellen der Arbeit, die wörtlich oder sinngemäß aus Veröffentlichungen oder aus anderweitigen fremden Äußerungen entnommen wurden, sind als solche kenntlich gemacht.
+
+        \vspace{0.8cm}
+        {\large\bfseries\sffamily Nutzung KI-gestützter Werkzeuge:\par}
+        \vspace{0.3cm}
+
+        Ich erkläre, dass ich bei der Erstellung dieser Arbeit keine oder nur die folgenden KI-gestützten Werkzeuge verwendet habe:
+
+        \vspace{0.3cm}
+        \begin{itemize}[leftmargin=1.5em, labelsep=0.8em]
+            \item[\ifthenelse{\boolean{AiUsed}}{$\square$}{$\boxtimes$}] 
+            Ich habe keine KI-gestützten Werkzeuge verwendet.
+
+            \item[\ifthenelse{\boolean{AiUsed}}{$\boxtimes$}{$\square$}] 
+            Ich habe die folgenden KI-gestützten Werkzeuge verwendet:
+            \ifthenelse{\boolean{AiUsed}}{%
+                \textbf{\AiToolsList}
+            }{%
+                \rule{8cm}{0.4pt}
+            }
+        \end{itemize}
+
+        \vspace{0.3cm}
+        Die verwendeten KI-gestützten Werkzeuge wurden ausschließlich für die folgenden Zwecke eingesetzt:
+        \vspace{0.2cm}
+
+        \ifthenelse{\boolean{AiUsed}}{%
+            \begin{tcolorbox}[colback=white, colframe=codeBorder, arc=1mm, boxrule=0.5pt, left=2mm, right=2mm, top=2mm, bottom=2mm]
+                \small\itshape \AiPurpose
+            \end{tcolorbox}
+        }{%
+            \vspace{0.2cm}
+            \noindent\rule{\textwidth}{0.4pt}\\[0.6em]
+            \noindent\rule{\textwidth}{0.4pt}
+        }
+
+        \vspace{0.4cm}
+        Alle durch KI generierten Inhalte wurden auf Richtigkeit und Urheberschaft überprüft und entsprechend kenntlich gemacht. Ich habe die Anweisungen der BTU Cottbus-Senftenberg zum Umgang mit generativen KI-Tools im wissenschaftlichen Arbeiten gelesen und verstanden. (Quelle: \url{https://www.b-tu.de/forschung/profil/forschungsethik/umgang-mit-ki-tools\#c369137})
+
+        \vspace{0.4cm}
+        Ich bin darüber informiert worden, dass sich das Fachgebiet Drahtlose Systeme die Möglichkeit vorbehält, die Arbeit auf Plagiate und den Einsatz von KI-basierten Werkzeugen zu überprüfen. Sollte diese Prüfung zu einem entsprechenden Ergebnis kommen, erhalte ich die Möglichkeit, mich im Rahmen eines ausführlichen Gesprächs und einer Selbstauskunft zu rechtfertigen.
+
+        \vspace{1.5cm}
+        \noindent
+        \begin{tabular}{@{}p{6.5cm}@{\hspace{2cm}}p{6.5cm}@{}}
+            \SubmissionCity, \SubmissionDate & \rule{6.5cm}{0.4pt} \\
+            Ort, Datum & Unterschrift des Verfassers (\AuthorName)
+        \end{tabular}
+
+    }{%
+        % ======================================================================
+        % ENGLISH VERSION
+        % ======================================================================
+        {\Large\bfseries\sffamily Declaration of Authenticity\par}
+        \vspace{0.6cm}
+
+        I hereby declare that I have written this thesis independently and that I have not previously submitted it as an examination performance at any other university or in any other study programme.
+
+        \vspace{0.3cm}
+        I confirm that I have fully and correctly cited all sources and aids used in the preparation of this thesis.
+
+        \vspace{0.3cm}
+        All passages in the thesis that are quoted or paraphrased from publications or other external sources are clearly identified as such.
+
+        \vspace{0.8cm}
+        {\large\bfseries\sffamily Use of AI-Supported Tools:\par}
+        \vspace{0.3cm}
+
+        I declare that I have not used any AI-supported tools, or only the following AI-supported tools, in the preparation of this thesis:
+
+        \vspace{0.3cm}
+        \begin{itemize}[leftmargin=1.5em, labelsep=0.8em]
+            \item[\ifthenelse{\boolean{AiUsed}}{$\square$}{$\boxtimes$}] 
+            I have not used any AI-supported tools.
+
+            \item[\ifthenelse{\boolean{AiUsed}}{$\boxtimes$}{$\square$}] 
+            I used the following AI-supported tools: 
+            \ifthenelse{\boolean{AiUsed}}{%
+                \textbf{\AiToolsList}
+            }{%
+                \rule{8cm}{0.4pt}
+            }
+        \end{itemize}
+
+        \vspace{0.3cm}
+        The AI-supported tools were used exclusively for the following purposes:
+        \vspace{0.2cm}
+
+        \ifthenelse{\boolean{AiUsed}}{%
+            \begin{tcolorbox}[colback=white, colframe=codeBorder, arc=1mm, boxrule=0.5pt, left=2mm, right=2mm, top=2mm, bottom=2mm]
+                \small\itshape \AiPurpose
+            \end{tcolorbox}
+        }{%
+            \vspace{0.2cm}
+            \noindent\rule{\textwidth}{0.4pt}\\[0.6em]
+            \noindent\rule{\textwidth}{0.4pt}
+        }
+
+        \vspace{0.4cm}
+        All content generated by AI has been checked for accuracy and authorship and labelled accordingly. I have read and understood the instructions of BTU Cottbus-Senftenberg regarding the use of generative AI tools in scientific work. (Source: \url{https://www.b-tu.de/forschung/profil/forschungsethik/umgang-mit-ki-tools\#c369137})
+
+        \vspace{0.4cm}
+        I have been informed that the Chair of Wireless Systems reserves the right to check the thesis for plagiarism and the use of AI-based tools. Should this examination reach such a conclusion, I will be given the opportunity to justify myself in a detailed interview and through self-disclosure.
+
+        \vspace{1.5cm}
+        \noindent
+        \begin{tabular}{@{}p{6.5cm}@{\hspace{2cm}}p{6.5cm}@{}}
+            \SubmissionCity, \SubmissionDate & \rule{6.5cm}{0.4pt} \\
+            Place, Date & Signature of the Author (\AuthorName)
+        \end{tabular}
+    }
+    \newpage
+}

@@ -1,0 +1,34 @@
+% ==============================================================================
+% ABSTRACT & KURZFASSUNG
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% Brandenburg University of Technology Cottbus-Senftenberg (BTU)
+% ==============================================================================
+
+% ------------------------------------------------------------------------------
+% English Abstract
+% ------------------------------------------------------------------------------
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Modern distributed cyber-physical environments, wireless sensor networks (WSNs), and edge computing architectures increasingly rely on autonomous decision-making agents driven by Large Language Models (LLMs) and deep neural networks. However, standard orchestration frameworks treat uncertainty as a monolithic scalar quantity, confounding \emph{epistemic uncertainty} (lack of model knowledge, resolvable by retrieval or escalation) with \emph{aleatoric uncertainty} (inherent ambiguity or stochasticity in the sensory environment). Consequently, current pipeline dispatchers suffer from sub-optimal routing decisions: wasting computational and communication budgets on fruitless model escalations or deferring inherently ambiguous tasks to costly human-in-the-loop oversight.
+
+This thesis presents \emph{Uncertainty-Type-Driven Subtask Routing} (UTSR), a principled framework designed for wireless edge and distributed intelligence systems. By decomposing overall uncertainty into orthogonal epistemic and aleatoric components via semantic entropy clustering and natural language inference, UTSR dynamically routes subtasks to targeted resolution mechanisms: external knowledge retrieval, model scaling, or structured human escalation. We evaluate the proposed architecture across standard multi-hop and ambiguous reasoning benchmarks, as well as an edge-assisted sensor monitoring testbed. Empirical results demonstrate that UTSR reduces unnecessary human escalation calls by up to \SI{38}{\percent} and lowers inference latency by \SI{27}{\percent} compared to confidence-agnostic baselines, while maintaining or improving task success rates. The findings establish that fine-grained uncertainty decomposition is a vital prerequisite for dependable, cost-efficient, and resilient edge intelligence in wireless environments.
+
+\vspace{0.8cm}
+\noindent\textbf{Keywords:} \ThesisKeywords.
+
+\vfill
+\newpage
+
+% ------------------------------------------------------------------------------
+% Deutsche Kurzfassung
+% ------------------------------------------------------------------------------
+\chapter*{Kurzfassung}
+\addcontentsline{toc}{chapter}{Kurzfassung}
+
+Moderne verteilte cyber-physische Systeme, drahtlose Sensornetzwerke (WSN) und Edge-Computing-Architekturen stützen sich in zunehmendem Maße auf autonome Entscheidungsagenten, die auf großen Sprachmodellen (LLMs) und tiefen neuronalen Netzen basieren. Bestehende Orchestrierungsansätze behandeln Unsicherheit jedoch überwiegend als monolithische skalare Größe. Hierbei wird \emph{epistemische Unsicherheit} (Wissensmangel des Modells, behebbar durch Informationsbeschaffung) mit \emph{aleatorischer Unsicherheit} (inhärentes Rauschen oder Mehrdeutigkeit der Sensorik) vermischt. Infolgedessen treffen gängige Dispatcher suboptimale Routingentscheidungen, was zu unnötigem Rechen- und Kommunikationsaufwand oder verfrühter menschlicher Intervention führt.
+
+In dieser Masterarbeit wird das Konzept des \emph{Uncertainty-Type-Driven Subtask Routing} (UTSR) vorgestellt. Durch die formale Zerlegung von Unsicherheiten in orthogonale epistemische und aleatorische Komponenten mittels semantischer Entropie-Clusterung und natürlicher Sprachinferenz lenkt UTSR Teilaufgaben dynamisch an zielgerichtete Lösungsmechanismen (lokale Wissensanreicherung, Modellskalierung oder koordinierte Eskalation). Die experimentelle Evaluierung auf Basis realitätsnaher Benchmarks sowie eines WSN-Überwachungsszenarios belegt eine Reduktion unnötiger menschlicher Eingriffe um bis zu \SI{38}{\percent} bei einer gleichzeitigen Latenzverringerung um \SI{27}{\percent} gegenüber Referenzverfahren. Die Ergebnisse verdeutlichen, dass eine differenzierte Unsicherheitszerlegung eine grundlegende Voraussetzung für verlässliche und energieeffiziente Edge-Intelligenz in drahtlosen Netzen darstellt.
+
+\vspace{0.8cm}
+\noindent\textbf{Schlagwörter:} Drahtlose Systeme, Künstliche Intelligenz, Unsicherheitsquantifizierung, Sprachmodelle, Edge Computing, Resilienz.

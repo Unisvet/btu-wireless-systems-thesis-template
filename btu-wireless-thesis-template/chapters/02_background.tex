@@ -1,0 +1,62 @@
+% ==============================================================================
+% CHAPTER 2: THEORETICAL AND TECHNICAL BACKGROUND
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% ==============================================================================
+
+\chapter{Theoretical and Technical Background}
+\label{ch:background}
+
+\begin{takeawaybox}[Writing Guide: Chapter 2 --- Background]
+\textbf{Goal}: Establish all theoretical, mathematical, and architectural fundamentals that a graduate student or researcher needs to understand your thesis without consulting outside textbooks.\\
+\textbf{Typical Length}: 10--15 pages (approx. 15--20\% of the thesis).\\
+\textbf{Important Distinction}:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Background (Chapter 2)} explains established concepts, formulas, theorems, and hardware architectures (e.g. what is Bayes rule, what is WSN latency, how do CNNs/LLMs work).
+    \item \textbf{Related Work (Chapter 3)} analyzes recent papers solving the \emph{same or similar problem} as you and compares their shortcomings to your work.
+\end{itemize}
+\end{takeawaybox}
+
+\section{Wireless Sensor Networks and Edge Intelligence}
+\label{sec:bg_wsn}
+
+Modern \acp{WSN} comprise spatially dispersed, autonomous sensor nodes equipped with sensing transducers, microcontrollers or digital signal processors (\acp{DSP}), and wireless transceivers (e.g., IEEE 802.15.4, \ac{LoRa}, or \ac{BLE})~\cite{langendoerfer2021resilience,tanenbaum2021computer}. In edge intelligence architectures, computation is partitioned across a continuum:
+\begin{enumerate}
+    \item \textbf{Constrained Edge Devices}: Low-power microcontrollers (e.g., ARM Cortex-M, ESP32) with severe memory ($\le \SI{512}{\kibi\byte}$ RAM) and energy budgets ($\le \SI{100}{\milli\watt}$).
+    \item \textbf{Edge Gateways / Aggregators}: Intermediate edge nodes (e.g., NVIDIA Jetson, Raspberry Pi 5) capable of running quantized transformer models and local vector indexing.
+    \item \textbf{Central Cloud Clusters}: High-performance server environments with massive compute and storage, accessible via backhaul links at the cost of network latency and egress fees.
+\end{enumerate}
+
+\section{Decomposition of Predictive Uncertainty}
+\label{sec:bg_uncertainty_decomp}
+
+In probabilistic machine learning, the predictive uncertainty of a model $f_{\boldsymbol{\theta}}(\mathbf{x})$ parameterized by $\boldsymbol{\theta}$ given an input $\mathbf{x} \in \mathcal{X}$ is fundamentally divided into two distinct components~\cite{kendall2017uncertainties}:
+
+\begin{equation}
+    \underbrace{\operatorname{Var}_{p(y|\mathbf{x})}[y]}_{\text{Total Uncertainty}} = \underbrace{\mathbb{E}_{p(\boldsymbol{\theta}|\mathcal{D})}\left[\operatorname{Var}_{p(y|\mathbf{x},\boldsymbol{\theta})}[y]\right]}_{\text{Aleatoric Uncertainty } (U_{\text{aleatoric}})} + \underbrace{\operatorname{Var}_{p(\boldsymbol{\theta}|\mathcal{D})}\left[\mathbb{E}_{p(y|\mathbf{x},\boldsymbol{\theta})}[y]\right]}_{\text{Epistemic Uncertainty } (U_{\text{epistemic}})}
+    \label{eq:uncertainty_decomp}
+\end{equation}
+
+\subsection{Epistemic Uncertainty (Model Uncertainty)}
+Epistemic uncertainty reflects the model's ignorance due to lack of training data or knowledge in a specific region of the input space. Crucially, epistemic uncertainty is \textbf{reducible}: it decreases as more relevant data or retrieval context is supplied to the model.
+
+\subsection{Aleatoric Uncertainty (Data / Environment Noise)}
+Aleatoric uncertainty arises from inherent stochasticity, measurement noise in physical sensors (e.g., ultrasonic multipath distortion), or genuine semantic ambiguity in natural language prompts. Aleatoric uncertainty is \textbf{irreducible} by simply collecting more parameters or running bigger models without changing the input representation or resolving the ambiguity.
+
+\section{Semantic Entropy in Generative Sequence Models}
+\label{sec:bg_semantic_entropy}
+
+For autoregressive models producing sequences $\mathbf{s} = (w_1, w_2, \dots, w_T)$, raw token-level entropy conflates linguistic paraphrasing with genuine factual uncertainty~\cite{kuhn2023semantic}. Let $\mathcal{C} = \{c_1, c_2, \dots, c_K\}$ denote semantic equivalence classes over generated answer sequences $\mathbf{s} \sim p(\mathbf{s}|\mathbf{x})$. Two sequences $\mathbf{s}_i$ and $\mathbf{s}_j$ belong to the same semantic class $c_k$ if they are mutually entail each other under bidirectional \ac{NLI}:
+
+\begin{equation}
+    \mathbf{s}_i \sim \mathbf{s}_j \iff \operatorname{NLI}(\mathbf{s}_i \to \mathbf{s}_j) = \text{Entailment} \;\land\; \operatorname{NLI}(\mathbf{s}_j \to \mathbf{s}_i) = \text{Entailment}
+    \label{eq:semantic_equivalence}
+\end{equation}
+
+The semantic entropy $\mathcal{H}_{\text{sem}}$ is then computed over the discrete probability distribution of semantic classes:
+
+\begin{equation}
+    \mathcal{H}_{\text{sem}}(\mathbf{x}) = -\sum_{k=1}^{K} P(c_k \mid \mathbf{x}) \log P(c_k \mid \mathbf{x}), \quad \text{where} \quad P(c_k \mid \mathbf{x}) = \sum_{\mathbf{s} \in c_k} p(\mathbf{s} \mid \mathbf{x})
+    \label{eq:semantic_entropy}
+\end{equation}
+
+\Cref{eq:semantic_entropy} serves as the mathematical foundation for separating semantic diversity from surface-level token variations in our proposed edge routing pipeline.
