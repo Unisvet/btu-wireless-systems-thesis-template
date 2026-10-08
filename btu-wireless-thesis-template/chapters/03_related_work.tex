@@ -20,9 +20,9 @@
 \section{Edge AI and Adaptive Model Cascades}
 \label{sec:related_edge_cascades}
 
-To mitigate the computational limitations of edge devices, early-exit networks and model cascading frameworks have gained widespread traction~\cite{pechlivanidou2022survey}. Cascades execute a lightweight local model first and escalate to a more capable, energy-intensive model only when the local prediction exhibits low confidence. For example, popular systems deploy small SLMs (Small Language Models) on gateways while forwarding difficult queries to centralized clusters.
+To mitigate the computational limitations of edge devices, early-exit networks and model cascading frameworks have gained widespread traction~\cite{pechlivanidou2022survey,shi2016edge,mao2017survey}. Cascades execute a lightweight local model first and escalate to a more capable, energy-intensive model only when the local prediction exhibits low confidence. For example, popular systems deploy small SLMs (Small Language Models) on gateways while forwarding difficult queries to centralized clusters.
 
-However, existing cascades predominantly rely on heuristic confidence thresholds computed from softmax probabilities. As shown by Kendall and Gal~\cite{kendall2017uncertainties}, softmax confidence is notoriously uncalibrated and blind to out-of-distribution shifts. Crucially, when an edge node encounters sensory inputs corrupted by multipath interference or acoustic noise, the confidence collapses due to \emph{aleatoric} factors. Forwarding such samples to a larger cloud model wastes communication energy without improving classification accuracy.
+However, existing cascades predominantly rely on heuristic confidence thresholds computed from softmax probabilities. As shown by Kendall and Gal~\cite{kendall2017uncertainties}, softmax confidence is notoriously uncalibrated and blind to out-of-distribution shifts. Crucially, when an edge node encounters sensory inputs corrupted by multipath interference or acoustic noise, the confidence collapses due to \emph{aleatoric} factors. Forwarding such samples to a larger cloud model wastes communication energy without improving classification accuracy~\cite{buttyan2010application}.
 
 \section{Uncertainty Estimation in Autoregressive Models}
 \label{sec:related_uncertainty_quant}
@@ -32,7 +32,9 @@ Recent advances have focused on uncertainty quantification specifically tailored
 \section{Human-in-the-Loop Orchestration and Learning to Defer}
 \label{sec:related_hitl}
 
-In safety-critical cyber-physical systems, autonomous pipelines must safely defer uncertain predictions to human experts (\ac{HITL}). The mathematical framework of \emph{learning to defer} models the joint cost of human labor and machine prediction error. Traditional deferral mechanisms trigger human escalation whenever total predictive uncertainty exceeds a budget threshold. However, in noisy wireless monitoring environments, this results in human fatigue and excessive operational costs, as human supervisors are repeatedly queried for trivial epistemic gaps that could have been resolved through automated database lookups.
+In safety-critical cyber-physical systems, autonomous pipelines must safely defer uncertain predictions to human experts (\ac{HITL}). The mathematical framework of \emph{learning to defer} models the joint cost of human labor and machine prediction error. As analyzed by \textcite{meissner2026human}, navigating this interface requires shifting from rigid deterministic handoffs to collaborative joint cognitive systems. Rather than viewing the human as a fail-safe exception handler, modern AgentOps architectures treat human and synthetic agents as complementary cognitive entities, requiring calibrated friction-by-design to prevent epistemic deskilling while avoiding alarm fatigue.
+
+Traditional deferral mechanisms, however, trigger human escalation whenever total predictive uncertainty exceeds an uncalibrated scalar threshold. In noisy wireless monitoring environments, this results in human fatigue and excessive operational costs, as human supervisors are repeatedly queried for trivial epistemic gaps that could have been resolved through automated database lookups.
 
 \section{Comparative Synthesis and the Research Gap}
 \label{sec:related_synthesis}

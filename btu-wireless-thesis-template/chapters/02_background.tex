@@ -19,12 +19,19 @@
 \section{Wireless Sensor Networks and Edge Intelligence}
 \label{sec:bg_wsn}
 
-Modern \acp{WSN} comprise spatially dispersed, autonomous sensor nodes equipped with sensing transducers, microcontrollers or digital signal processors (\acp{DSP}), and wireless transceivers (e.g., IEEE 802.15.4, \ac{LoRa}, or \ac{BLE})~\cite{langendoerfer2021resilience,tanenbaum2021computer}. In edge intelligence architectures, computation is partitioned across a continuum:
+Modern \acp{WSN} comprise spatially dispersed, autonomous sensor nodes equipped with sensing transducers, microcontrollers or digital signal processors (\acp{DSP}), and wireless transceivers (e.g., IEEE 802.15.4, \ac{LoRa}, or \ac{BLE})~\cite{akyildiz2002wireless,rappaport2002wireless,tanenbaum2021computer,buttyan2010application}. In edge intelligence architectures, computation is partitioned across a continuum:
 \begin{enumerate}
-    \item \textbf{Constrained Edge Devices}: Low-power microcontrollers (e.g., ARM Cortex-M, ESP32) with severe memory ($\le \SI{512}{\kibi\byte}$ RAM) and energy budgets ($\le \SI{100}{\milli\watt}$).
-    \item \textbf{Edge Gateways / Aggregators}: Intermediate edge nodes (e.g., NVIDIA Jetson, Raspberry Pi 5) capable of running quantized transformer models and local vector indexing.
+    \item \textbf{Constrained Edge Devices}: Low-power microcontrollers (e.g., ARM Cortex-M, ESP32) with severe memory ($\le \SI{512}{\kibi\byte}$ RAM) and energy budgets ($\le \SI{100}{\milli\watt}$)~\cite{piotrowski2006public}.
+    \item \textbf{Edge Gateways / Aggregators}: Intermediate edge nodes (e.g., NVIDIA Jetson, Raspberry Pi 5) capable of running quantized transformer models and local vector indexing~\cite{shi2016edge,mao2017survey}.
     \item \textbf{Central Cloud Clusters}: High-performance server environments with massive compute and storage, accessible via backhaul links at the cost of network latency and egress fees.
 \end{enumerate}
+
+\section{From DevOps to AgentOps: Joint Cognitive Systems}
+\label{sec:bg_agentops}
+
+As edge architectures evolve from static rule-based sensing to autonomous decision agents, the software paradigm shifts from deterministic script execution (DevOps) to probabilistic socio-technical orchestration (AgentOps)~\cite{meissner2026human}. Rather than treating artificial intelligence merely as an external tool waiting for kinetic invocation, modern multi-agent systems act as active, autonomous symbionts that perceive environmental state, formulate intermediate plans, and execute actions within higher-order cognitive loops. 
+
+According to \textcite{meissner2026human}, operationalizing such joint cognitive systems requires rigorous \emph{cognitive calibration} and \emph{shared mental models}. When an autonomous edge agent operates under incomplete or noisy sensory telemetry, it must assess its own epistemic boundaries. Uncalibrated autonomy leads either to over-reliance (automation complacency) or under-utilization (system rejection). By formalizing task delegation through signal detection theory and intentional friction-by-design, AgentOps provides the operational framework needed to orchestrate distributed human-agent teams safely in mission-critical wireless environments.
 
 \section{Decomposition of Predictive Uncertainty}
 \label{sec:bg_uncertainty_decomp}

@@ -1,0 +1,46 @@
+% ==============================================================================
+% BIBLIOGRAPHY WRITING GUIDE
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme)
+% Brandenburg University of Technology Cottbus-Senftenberg (BTU)
+% ==============================================================================
+
+\defbibnote{bibguidance}{%
+\begin{tcolorbox}[
+    colback=white,
+    colframe=btuRed,
+    title={\textbf{Student Writing Guide: Referencing Standards \& Literature Management}},
+    fonttitle=\bfseries\sffamily,
+    sharp corners,
+    boxrule=0.8pt
+]
+\small
+The Bibliography reflects the academic rigor, depth, and scholarly honesty of your thesis. Follow these essential guidelines:
+\begin{enumerate}[leftmargin=*,itemsep=2pt,topsep=2pt]
+    \item \textbf{Prioritize Peer-Reviewed Primary Literature:}
+    \begin{itemize}[leftmargin=*,itemsep=1pt]
+        \item Base your research on recognized, peer-reviewed international publications: IEEE Transactions, ACM Journals and Proceedings, Springer, Elsevier, and premier conferences (e.g., IEEE INFOCOM, ACM MobiCom, NeurIPS, ICML, ICLR, CVPR).
+        \item For network protocols and specifications, cite authoritative standards (IETF RFCs, 3GPP Technical Specifications, IEEE 802.11/802.15.4).
+        \item Avoid unverified blog posts, forum answers, Wikipedia, or commercial marketing whitepapers as primary academic evidence.
+    \end{itemize}
+    \item \textbf{Proper BibTeX Formatting in \texttt{references.bib}:}
+    \begin{itemize}[leftmargin=*,itemsep=1pt]
+        \item \textbf{Protect Capitalization:} BibTeX automatically converts titles to lowercase unless explicitly enclosed in braces. Protect acronyms and proper names (e.g., \texttt{\{WSN\}}, \texttt{\{IoT\}}, \texttt{\{5G\}}, \texttt{\{LoRaWAN\}}, \texttt{\{Bayesian\}}, \texttt{\{Markov\}}, \texttt{\{AgentOps\}}).
+        \item \textbf{Author Format:} Always write authors as \texttt{Lastname, Firstname and Lastname, Firstname}. Do not manually truncate authors with \texttt{et al.} in the \texttt{.bib} file---let BibLaTeX handle formatting automatically.
+        \item \textbf{Include DOIs and Volumes:} Provide complete bibliographic metadata including journal/proceedings name, volume, issue, page range, and persistent digital object identifiers (\texttt{doi = \{...\}}).
+    \end{itemize}
+    \item \textbf{In-Text Citation Best Practices:}
+    \begin{itemize}[leftmargin=*,itemsep=1pt]
+        \item Use \texttt{\textbackslash cite\{key\}} for standard parenthetical evidence: e.g., ``...in wireless sensor networks \cite{akyildiz2002wireless}.''
+        \item Use \texttt{\textbackslash textcite\{key\}} when the author is part of the sentence grammar: e.g., ``\textcite{meissner2026human} investigated the transition to AgentOps...''
+        \item Group related citations together: \texttt{\textbackslash cite\{refA, refB, refC\}} instead of multiple individual tags.
+    \end{itemize}
+    \item \textbf{Academic Integrity \& Strict Prohibition of AI Hallucinations:}
+    \begin{itemize}[leftmargin=*,itemsep=1pt]
+        \item \textbf{Crucial:} Never copy and paste unchecked citations suggested by LLMs (ChatGPT, Gemini, Copilot). Large Language Models frequently hallucinate plausible-sounding authors, synthetic paper titles, or invalid DOIs.
+        \item Every paper cited in your thesis must be verified, downloaded, and read by yourself. Citing fabricated literature constitutes academic misconduct under the BTU Statute for Safeguarding Good Scientific Practice.
+    \end{itemize}
+\end{enumerate}
+\textit{Note: This writing guide box is printed via the \texttt{prenote=bibguidance} option of \texttt{\textbackslash printbibliography} in \texttt{main.tex}. You can remove or comment it out for your final thesis printout.}
+\end{tcolorbox}
+\vspace{0.6cm}
+}
