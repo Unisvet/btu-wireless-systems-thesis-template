@@ -5,45 +5,75 @@
 % ==============================================================================
 
 \begin{titlepage}
+    % Optional subtle high-tech earth constellation background in bottom-right
+    \ifthenelse{\boolean{ShowEarthBackground}}{%
+        \AddToShipoutPictureBG*{%
+            \AtPageLowerLeft{%
+                \includegraphics[width=\paperwidth,keepaspectratio]{chair-ws-logo-earth.png}%
+            }%
+        }%
+    }{}
+
     \centering
-    \vspace*{0.3cm}
 
     % --------------------------------------------------------------------------
-    % University Logo
+    % Header: Dual University + Chair Logos (or Centered University Logo)
     % --------------------------------------------------------------------------
-    \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{%
-        \includegraphics[height=1.8cm]{btu_logo_de.pdf}
+    \vspace*{-0.5cm}
+    \ifthenelse{\boolean{ShowChairLogoHeader}}{%
+        \noindent
+        \begin{minipage}[c]{0.52\textwidth}
+            \raggedright
+            \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{%
+                \includegraphics[height=1.3cm, width=\linewidth, keepaspectratio]{btu_logo_de.pdf}%
+            }{%
+                \includegraphics[height=1.3cm, width=\linewidth, keepaspectratio]{btu_logo_en.png}%
+            }%
+        \end{minipage}%\hfill%
+        \begin{minipage}[c]{0.45\textwidth}
+            \raggedleft
+            \includegraphics[height=1.45cm, width=\linewidth, keepaspectratio]{chair-ws-logo.png}%
+        \end{minipage}%
+        \par
+        \vspace{0.35cm}
+        {\color{wsDarkBlue}\rule{\textwidth}{1.2pt}}
     }{%
-        \includegraphics[height=1.8cm]{btu_logo_en.png}
+        \begin{center}
+            \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{%
+                \includegraphics[height=1.6cm, keepaspectratio]{btu_logo_de.pdf}%
+            }{%
+                \includegraphics[height=1.6cm, keepaspectratio]{btu_logo_en.png}%
+            }
+        \end{center}
     }
 
-    \vspace{1.2cm}
+    \vspace{0.9cm}
 
     % --------------------------------------------------------------------------
     % Thesis Title & Subtitle
     % --------------------------------------------------------------------------
-    {\huge\bfseries\sffamily \ThesisTitle \par}
+    {\huge\bfseries\sffamily\color{wsDarkNavy} \ThesisTitle \par}
     
-    \vspace{0.6cm}
+    \vspace{0.5cm}
     \ifthenelse{\equal{\ThesisSubtitle}{}}{}{%
         {\Large\sffamily\color{btuDarkGray} \ThesisSubtitle \par}
-        \vspace{0.4cm}
+        \vspace{0.3cm}
     }
 
-    \vspace{0.8cm}
+    \vspace{0.7cm}
 
     % --------------------------------------------------------------------------
     % Thesis Type & Author
     % --------------------------------------------------------------------------
-    {\LARGE\bfseries\sffamily\color{btuRed} \ThesisType \par}
+    {\LARGE\bfseries\sffamily\color{wsDarkBlue} \ThesisType \par}
     
     \vspace{0.3cm}
     {\large \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{vorgelegt von}{by}\par}
-    \vspace{0.3cm}
+    \vspace{0.25cm}
     {\LARGE\bfseries\sffamily \AuthorName \par}
     \vspace{0.2cm}
     {\large \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{Matrikelnummer}{Matriculation Number}: \StudentId \par}
-    \vspace{0.2cm}
+    \vspace{0.15cm}
     {\large \DegreeProgram \par}
 
     \vfill
@@ -52,13 +82,13 @@
     % Institutional Affiliation
     % --------------------------------------------------------------------------
     {\large \ifthenelse{\equal{\ThesisLanguage}{ngerman}}{Vorgelegt am}{This report is submitted to the}\par}
-    \vspace{0.2cm}
-    {\large\bfseries\sffamily \ChairName \par}
+    \vspace{0.15cm}
+    {\large\bfseries\sffamily\color{wsDarkBlue} \ChairName \par}
     {\normalsize \InstituteName\par}
     {\normalsize \FacultyName\par}
     {\normalsize \UniversityName\par}
 
-    \vspace{1.5cm}
+    \vspace{1.2cm}
 
     % --------------------------------------------------------------------------
     % Supervision & Date
@@ -74,5 +104,6 @@
     \vspace{0.4cm}
 
     {\large \SubmissionCity, \SubmissionDate \par}
+    \vspace*{0.2cm}
 
 \end{titlepage}

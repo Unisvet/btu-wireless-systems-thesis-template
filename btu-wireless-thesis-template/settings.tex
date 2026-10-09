@@ -71,17 +71,25 @@
 \setkomafont{pagenumber}{\small\sffamily}
 
 % ------------------------------------------------------------------------------
-% 5. BTU Corporate Colors & Graphics
+% 5. Corporate & Chair Colors & Graphics
 % ------------------------------------------------------------------------------
 \usepackage{xcolor}
+
+% Chair of Wireless Systems (Fachgebiet Drahtlose Systeme) Design Colors
+\definecolor{wsDarkBlue}{RGB}{13, 63, 138}    % Primary Chair Dark Blue #0D3F8A
+\definecolor{wsBlue}{RGB}{13, 63, 138}        % Alias for primary chair blue
+\definecolor{wsAccentBlue}{RGB}{0, 102, 204}  % Bright wireless accent blue #0066CC
+\definecolor{wsLightBlue}{RGB}{240, 245, 252} % Soft tinted blue background #F0F5FC
+\definecolor{wsDarkNavy}{RGB}{8, 38, 84}      % Deep navy for text/headings #082654
+
 % BTU Cottbus-Senftenberg Corporate Colors
-\definecolor{btuRed}{RGB}{186, 0, 50}       % BTU Primary Red #BA0032
-\definecolor{btuDarkRed}{RGB}{140, 0, 35}   % BTU Dark Red
-\definecolor{btuDarkGray}{RGB}{51, 51, 51}  % BTU Charcoal
+\definecolor{btuRed}{RGB}{186, 0, 50}          % BTU Primary Red #BA0032
+\definecolor{btuDarkRed}{RGB}{140, 0, 35}      % BTU Dark Red
+\definecolor{btuDarkGray}{RGB}{51, 51, 51}     % BTU Charcoal
 \definecolor{btuLightGray}{RGB}{245, 245, 247}
 \definecolor{codeBackground}{RGB}{248, 249, 250}
 \definecolor{codeBorder}{RGB}{222, 226, 230}
-\definecolor{codeKeyword}{RGB}{0, 51, 153}
+\definecolor{codeKeyword}{RGB}{13, 63, 138}    % Aligned with wsDarkBlue
 \definecolor{codeComment}{RGB}{108, 117, 125}
 \definecolor{codeString}{RGB}{163, 21, 21}
 
@@ -89,6 +97,7 @@
 \graphicspath{{figures/}}
 \usepackage{subcaption} % Modern subfigure and subcaption support
 \usepackage{pdfpages}   % For embedding external signed PDFs
+\usepackage{eso-pic}    % For decorative page backgrounds / title page watermark
 
 
 % ------------------------------------------------------------------------------
@@ -153,8 +162,9 @@
 % ------------------------------------------------------------------------------
 \usepackage[most]{tcolorbox}
 \newtcolorbox{researchquestion}[1][]{
-    colback=btuLightGray,
-    colframe=btuRed,
+    colback=wsLightBlue,
+    colframe=wsDarkBlue,
+    coltitle=white,
     fonttitle=\bfseries\sffamily,
     title=#1,
     arc=2mm,
@@ -166,8 +176,8 @@
 }
 
 \newtcolorbox{takeawaybox}[1][]{
-    colback=btuLightGray,
-    colframe=btuDarkGray,
+    colback=wsLightBlue!40!white,
+    colframe=wsDarkNavy,
     fonttitle=\bfseries\sffamily,
     title=#1,
     arc=2mm,
@@ -203,9 +213,9 @@
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=btuDarkRed,
-    citecolor=btuDarkRed,
-    urlcolor=btuRed,
+    linkcolor=wsDarkBlue,
+    citecolor=wsDarkBlue,
+    urlcolor=wsAccentBlue,
     pdftitle={\ThesisTitle},
     pdfauthor={\AuthorName},
     pdfsubject={\ThesisType{} - \ChairName, \UniversityName},
@@ -220,8 +230,9 @@
 \usepackage[nameinlink, capitalize, noabbrev]{cleveref}
 
 % ------------------------------------------------------------------------------
-% 15. KOMA-Script Font Styling for Headings
+% 15. KOMA-Script Font Styling for Headings & Accents
 % ------------------------------------------------------------------------------
-\setkomafont{disposition}{\bfseries\sffamily}
-\setkomafont{title}{\bfseries\sffamily}
-\setkomafont{subtitle}{\normalfont\Large\sffamily}
+\setkomafont{disposition}{\bfseries\sffamily\color{wsDarkNavy}}
+\setkomafont{title}{\bfseries\sffamily\color{wsDarkNavy}}
+\setkomafont{subtitle}{\normalfont\Large\sffamily\color{btuDarkGray}}
+\setkomafont{headsepline}{\color{wsDarkBlue}}
