@@ -89,7 +89,7 @@
 \definecolor{btuLightGray}{RGB}{245, 245, 247}
 \definecolor{codeBackground}{RGB}{248, 249, 250}
 \definecolor{codeBorder}{RGB}{222, 226, 230}
-\definecolor{codeKeyword}{RGB}{13, 63, 138}    % Aligned with wsDarkBlue
+\definecolor{codeKeyword}{RGB}{0, 0, 0}         % Black / bold keywords
 \definecolor{codeComment}{RGB}{108, 117, 125}
 \definecolor{codeString}{RGB}{163, 21, 21}
 
@@ -162,8 +162,8 @@
 % ------------------------------------------------------------------------------
 \usepackage[most]{tcolorbox}
 \newtcolorbox{researchquestion}[1][]{
-    colback=wsLightBlue,
-    colframe=wsDarkBlue,
+    colback=btuLightGray,
+    colframe=btuDarkGray,
     coltitle=white,
     fonttitle=\bfseries\sffamily,
     title=#1,
@@ -176,8 +176,9 @@
 }
 
 \newtcolorbox{takeawaybox}[1][]{
-    colback=wsLightBlue!40!white,
-    colframe=wsDarkNavy,
+    colback=btuLightGray,
+    colframe=btuDarkGray,
+    coltitle=white,
     fonttitle=\bfseries\sffamily,
     title=#1,
     arc=2mm,
@@ -213,9 +214,9 @@
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=wsDarkBlue,
-    citecolor=wsDarkBlue,
-    urlcolor=wsAccentBlue,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=black,
     pdftitle={\ThesisTitle},
     pdfauthor={\AuthorName},
     pdfsubject={\ThesisType{} - \ChairName, \UniversityName},
@@ -232,7 +233,7 @@
 % ------------------------------------------------------------------------------
 % 15. KOMA-Script Font Styling for Headings & Accents
 % ------------------------------------------------------------------------------
-\setkomafont{disposition}{\bfseries\sffamily\color{wsDarkNavy}}
-\setkomafont{title}{\bfseries\sffamily\color{wsDarkNavy}}
+\setkomafont{disposition}{\bfseries\sffamily}
+\setkomafont{title}{\bfseries\sffamily}
 \setkomafont{subtitle}{\normalfont\Large\sffamily\color{btuDarkGray}}
-\setkomafont{headsepline}{\color{wsDarkBlue}}
+\setkomafont{headsepline}{\color{black}}

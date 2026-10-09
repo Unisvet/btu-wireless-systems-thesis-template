@@ -67,8 +67,8 @@ Open `metadata.tex` and fill in your details:
 ```latex
 \newcommand{\ThesisTitle}{Your Thesis Title Here}
 \newcommand{\AuthorName}{Max Mustermann}
-\newcommand{\MatriculationNumber}{1234567}
-\newcommand{\StudyProgram}{Information and Media Technology M.Sc.}
+\newcommand{\StudentId}{1234567}
+\newcommand{\DegreeProgram}{Master} % or 'Bachelor' (e.g. Master Artificial Intelligence, Cyber Security)
 \newcommand{\PrimarySupervisor}{Prof. Dr. rer. nat. Peter Langendörfer}
 \newcommand{\SecondarySupervisor}{Dr. rer. nat. Svetlana Meissner}
 \newcommand{\ThesisLanguage}{english} % or 'ngerman'
